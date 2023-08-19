@@ -14,6 +14,8 @@ type GLTFResult = GLTF & {
     Circle002: Mesh;
     Circle003: Mesh;
     Circle004: Mesh;
+    Circle004_1: Mesh;
+    Circle004_2: Mesh;
     Circle005: Mesh;
     Circle005_1: Mesh;
     Circle005_2: Mesh;
@@ -26,16 +28,16 @@ type GLTFResult = GLTF & {
     Circle010: Mesh;
     Circle011_1: Mesh;
     Circle011_2: Mesh;
-    Circle011_3: Mesh;
-    Circle011_4: Mesh;
-    Circle011_5: Mesh;
-    Circle011_6: Mesh;
-    Circle011_7: Mesh;
-    Circle011_8: Mesh;
     Circle012: Mesh;
     Circle012_1: Mesh;
     Circle012_2: Mesh;
     Circle013: Mesh;
+    Circle013_1: Mesh;
+    Circle013_2: Mesh;
+    Circle014_1: Mesh;
+    Circle014_2: Mesh;
+    Circle015_1: Mesh;
+    Circle015_2: Mesh;
     Circle020_1: Mesh;
     Circle020_2: Mesh;
     Circle034: Mesh;
@@ -90,27 +92,47 @@ type GLTFResult = GLTF & {
     Plane003: Mesh;
     Plane004: Mesh;
     Plane005: Mesh;
-    Plane005_1: Mesh;
-    Plane005_2: Mesh;
-    Plane006: Mesh;
-    Plane006_1: Mesh;
     Plane007: Mesh;
     Plane008: Mesh;
     Plane009: Mesh;
     Plane010: Mesh;
-    Plane010_1: Mesh;
-    Plane010_2: Mesh;
-    Plane010_3: Mesh;
     Plane011: Mesh;
     Plane012: Mesh;
     Plane013: Mesh;
+    Plane014: Mesh;
+    Plane014_1: Mesh;
+    Plane015: Mesh;
+    Plane015_1: Mesh;
+    Plane015_2: Mesh;
     Plane016: Mesh;
+    Plane017: Mesh;
+    Plane017_1: Mesh;
+    Plane018: Mesh;
+    Plane018_1: Mesh;
+    Plane019: Mesh;
+    Plane019_1: Mesh;
+    Plane021: Mesh;
+    Plane021_1: Mesh;
+    Plane022: Mesh;
+    Plane022_1: Mesh;
     Plane024: Mesh;
     Plane025: Mesh;
+    Plane025_1: Mesh;
+    Plane025_2: Mesh;
     Plane026: Mesh;
     Plane027: Mesh;
+    Plane027_1: Mesh;
+    Plane027_2: Mesh;
+    Plane028_1: Mesh;
+    Plane028_2: Mesh;
+    Plane030_1: Mesh;
+    Plane030_2: Mesh;
     Plane031: Mesh;
+    Plane032_1: Mesh;
+    Plane032_2: Mesh;
     Plane033: Mesh;
+    Plane033_1: Mesh;
+    Plane033_2: Mesh;
     Plane034: Mesh;
     Plane035: Mesh;
     Plane036: Mesh;
@@ -130,17 +152,16 @@ type GLTFResult = GLTF & {
     Plane059: Mesh;
     Plane062: Mesh;
     Plane063: Mesh;
-    Plane064: Mesh;
     Plane065: Mesh;
     Plane066: Mesh;
+    Plane070: Mesh;
     Plane070_1: Mesh;
-    Plane070_2: Mesh;
+    Plane071: Mesh;
     Plane071_1: Mesh;
-    Plane071_2: Mesh;
+    Plane072: Mesh;
     Plane072_1: Mesh;
-    Plane072_2: Mesh;
+    Plane074: Mesh;
     Plane074_1: Mesh;
-    Plane074_2: Mesh;
     Plane077_1: Mesh;
     Plane077_2: Mesh;
     Plane078: Mesh;
@@ -154,94 +175,66 @@ type GLTFResult = GLTF & {
     Plane079_8: Mesh;
     Plane080_1: Mesh;
     Plane080_2: Mesh;
-    Plane080_3: Mesh;
-    Plane080_4: Mesh;
-    Plane080_5: Mesh;
-    Plane080_6: Mesh;
-    Plane080_7: Mesh;
-    Plane080_8: Mesh;
     Plane081: Mesh;
-    Plane081_10: Mesh;
-    Plane081_11: Mesh;
-    Plane081_12: Mesh;
-    Plane081_13: Mesh;
-    Plane081_14: Mesh;
-    Plane081_15: Mesh;
-    Plane081_16: Mesh;
     Plane081_1: Mesh;
     Plane081_2: Mesh;
-    Plane081_3: Mesh;
-    Plane081_4: Mesh;
-    Plane081_5: Mesh;
-    Plane081_6: Mesh;
-    Plane081_7: Mesh;
-    Plane081_8: Mesh;
-    Plane081_9: Mesh;
     Plane082: Mesh;
     Plane083_1: Mesh;
     Plane083_2: Mesh;
     Plane088: Mesh;
     Plane088_1: Mesh;
-    Plane090: Mesh;
-    Plane090_10: Mesh;
-    Plane090_11: Mesh;
-    Plane090_12: Mesh;
-    Plane090_13: Mesh;
-    Plane090_14: Mesh;
-    Plane090_15: Mesh;
-    Plane090_16: Mesh;
-    Plane090_17: Mesh;
-    Plane090_1: Mesh;
-    Plane090_2: Mesh;
-    Plane090_3: Mesh;
-    Plane090_4: Mesh;
-    Plane090_5: Mesh;
-    Plane090_6: Mesh;
-    Plane090_7: Mesh;
-    Plane090_8: Mesh;
-    Plane090_9: Mesh;
     Plane: Mesh;
     Plane_1: Mesh;
     Plane_2: Mesh;
     Poster001: Mesh;
     Poster: Mesh;
+    Projector: Mesh;
     Shelf001: Mesh;
     Shelf002: Mesh;
     Shelf: Mesh;
     Sofa: Mesh;
+    Torus001: Mesh;
+    Torus001_1: Mesh;
+    Torus001_2: Mesh;
+    Torus001_3: Mesh;
+    Torus001_4: Mesh;
+    Torus001_5: Mesh;
     Vert001: Mesh;
     Vert: Mesh;
-    cp: Mesh;
-    netflix: Mesh;
-    witcher: Mesh;
+    forza: Mesh;
+    halo: Mesh;
   };
   materials: {
     ['Black']: MeshStandardMaterial;
     ['Black.001']: MeshStandardMaterial;
     ['Black.002']: MeshStandardMaterial;
-    Book: MeshStandardMaterial;
     Floor: MeshStandardMaterial;
     Glass: MeshPhysicalMaterial;
     Green: MeshStandardMaterial;
-    Material: MeshStandardMaterial;
     Metal: MeshStandardMaterial;
     Screen: MeshStandardMaterial;
     Sofa: MeshStandardMaterial;
     White: MeshStandardMaterial;
+    ['Material.001']: MeshStandardMaterial;
+    ['Material.003']: MeshStandardMaterial;
+    ['Material.009']: MeshStandardMaterial;
+    ['Material.010']: MeshStandardMaterial;
+    ['Material.011']: MeshStandardMaterial;
+    ['Material.012']: MeshStandardMaterial;
+    ['Material.013']: MeshStandardMaterial;
+    ['Material.014']: MeshStandardMaterial;
+    ['ambiant light']: MeshStandardMaterial;
     ['light']: MeshStandardMaterial;
     ['light.001']: MeshStandardMaterial;
     ['light.002']: MeshStandardMaterial;
     ['light.003']: MeshStandardMaterial;
-    ['violet light']: MeshStandardMaterial;
-    ['white light']: MeshStandardMaterial;
     r: MeshPhysicalMaterial;
     g: MeshPhysicalMaterial;
     b: MeshPhysicalMaterial;
     v: MeshPhysicalMaterial;
     bulb: MeshStandardMaterial;
-    cp: MeshStandardMaterial;
-    netflix: MeshStandardMaterial;
-    witcher: MeshStandardMaterial;
+    forza: MeshStandardMaterial;
+    halo: MeshStandardMaterial;
   };
 };
 
@@ -273,7 +266,7 @@ const Room: React.FC<GroupProps> = (props) => {
     const newAmbiantLight = randomColor({ luminosity: 'dark' });
 
     // Cloning material to avoid mutating the original
-    const newAmbiantLightMaterial = materials['violet light'].clone();
+    const newAmbiantLightMaterial = materials['ambiant light'].clone();
 
     // Updating the emissive color
     newAmbiantLightMaterial.emissive.set(newAmbiantLight);
@@ -282,8 +275,8 @@ const Room: React.FC<GroupProps> = (props) => {
     setAmbiantLight(newAmbiantLight);
 
     // Updating the material
-    materials['violet light'] = newAmbiantLightMaterial;
-    materials['violet light'].needsUpdate = true;
+    materials['ambiant light'] = newAmbiantLightMaterial;
+    materials['ambiant light'].needsUpdate = true;
   };
 
   const handleToggleDeskLight = (): void => {
@@ -419,15 +412,10 @@ const Room: React.FC<GroupProps> = (props) => {
         </mesh>
         {/* Desk */}
         <group position={[0.551, 0, -3.143]}>
+          <mesh castShadow={true} geometry={nodes.Plane014.geometry} material={materials.White} receiveShadow={true} />
           <mesh
             castShadow={true}
-            geometry={nodes.Plane005_1.geometry}
-            material={materials.White}
-            receiveShadow={true}
-          />
-          <mesh
-            castShadow={true}
-            geometry={nodes.Plane005_2.geometry}
+            geometry={nodes.Plane014_1.geometry}
             material={materials['Black']}
             receiveShadow={true}
           />
@@ -525,20 +513,20 @@ const Room: React.FC<GroupProps> = (props) => {
           <group position={[0.038, 1.748, -0.666]} scale={1.19}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane010_1.geometry}
+              geometry={nodes.Plane015.geometry}
               material={materials['Black']}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane010_2.geometry}
+              geometry={nodes.Plane015_1.geometry}
               material={materials.Screen}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane010_3.geometry}
-              material={materials['violet light']}
+              geometry={nodes.Plane015_2.geometry}
+              material={materials['ambiant light']}
               receiveShadow={true}
               ref={screenMeshRef}
             />
@@ -620,13 +608,13 @@ const Room: React.FC<GroupProps> = (props) => {
           >
             <mesh
               castShadow={true}
-              geometry={nodes.Plane070_1.geometry}
+              geometry={nodes.Plane070.geometry}
               material={materials.White}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane070_2.geometry}
+              geometry={nodes.Plane070_1.geometry}
               material={materials['Black.001']}
               receiveShadow={true}
             />
@@ -640,7 +628,7 @@ const Room: React.FC<GroupProps> = (props) => {
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle008_2.geometry}
-                material={materials['violet light']}
+                material={materials['ambiant light']}
                 receiveShadow={true}
                 ref={fan1MeshRef}
               />
@@ -662,7 +650,7 @@ const Room: React.FC<GroupProps> = (props) => {
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle008_2.geometry}
-                material={materials['violet light']}
+                material={materials['ambiant light']}
                 receiveShadow={true}
                 ref={fan2MeshRef}
               />
@@ -692,7 +680,7 @@ const Room: React.FC<GroupProps> = (props) => {
               <mesh
                 castShadow={true}
                 geometry={nodes.Cube004_2.geometry}
-                material={materials['violet light']}
+                material={materials['ambiant light']}
                 receiveShadow={true}
                 ref={desktop1MeshRef}
               />
@@ -707,7 +695,7 @@ const Room: React.FC<GroupProps> = (props) => {
               <mesh
                 castShadow={true}
                 geometry={nodes.Cube004_2.geometry}
-                material={materials['violet light']}
+                material={materials['ambiant light']}
                 receiveShadow={true}
                 ref={desktop2MeshRef}
               />
@@ -771,14 +759,14 @@ const Room: React.FC<GroupProps> = (props) => {
         <group position={[-3.357, 0, 0.667]}>
           <mesh
             castShadow={true}
-            geometry={nodes.Plane006.geometry}
+            geometry={nodes.Plane017.geometry}
             material={materials['Black']}
             receiveShadow={true}
           />
           <mesh
             castShadow={true}
-            geometry={nodes.Plane006_1.geometry}
-            material={materials['violet light']}
+            geometry={nodes.Plane017_1.geometry}
+            material={materials['ambiant light']}
             receiveShadow={true}
             ref={tvStandMeshRef}
           />
@@ -953,13 +941,13 @@ const Room: React.FC<GroupProps> = (props) => {
             <group position={[-0.157, 0.109, -0.14]} rotation={[0, 1.571, 0]}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_3.geometry}
+                geometry={nodes.Plane018.geometry}
                 material={materials.White}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_4.geometry}
+                geometry={nodes.Plane018_1.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -975,26 +963,26 @@ const Room: React.FC<GroupProps> = (props) => {
           <group position={[0.28, 0.932, 1.02]} rotation={[0, 1.571, 0]} scale={0.91}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane080_3.geometry}
+              geometry={nodes.Plane019.geometry}
               material={materials['Black']}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane080_4.geometry}
+              geometry={nodes.Plane019_1.geometry}
               material={materials['light.002']}
               receiveShadow={true}
             />
             <group position={[-0.088, 0.108, -0.07]} scale={0.609}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Circle011_3.geometry}
+                geometry={nodes.Circle013_1.geometry}
                 material={materials['Black.001']}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Circle011_4.geometry}
+                geometry={nodes.Circle013_2.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1065,13 +1053,13 @@ const Room: React.FC<GroupProps> = (props) => {
             <group position={[-0.157, 0.109, -0.14]}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_5.geometry}
+                geometry={nodes.Plane021.geometry}
                 material={materials.White}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_6.geometry}
+                geometry={nodes.Plane021_1.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1079,13 +1067,13 @@ const Room: React.FC<GroupProps> = (props) => {
             <group position={[-0.157, 0.109, -0.14]} rotation={[0, 1.571, 0]}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_7.geometry}
+                geometry={nodes.Plane022.geometry}
                 material={materials.White}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_8.geometry}
+                geometry={nodes.Plane022_1.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1101,26 +1089,26 @@ const Room: React.FC<GroupProps> = (props) => {
           <group position={[0.28, 0.932, 1.74]} rotation={[0, 1.571, 0]} scale={0.91}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane080_5.geometry}
+              geometry={nodes.Plane025_1.geometry}
               material={materials['Black']}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane080_6.geometry}
+              geometry={nodes.Plane025_2.geometry}
               material={materials['light.002']}
               receiveShadow={true}
             />
             <group position={[-0.088, 0.108, -0.07]} scale={0.609}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Circle011_5.geometry}
+                geometry={nodes.Circle014_1.geometry}
                 material={materials['Black.001']}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Circle011_6.geometry}
+                geometry={nodes.Circle014_2.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1191,13 +1179,13 @@ const Room: React.FC<GroupProps> = (props) => {
             <group position={[-0.157, 0.109, -0.14]}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_9.geometry}
+                geometry={nodes.Plane027_1.geometry}
                 material={materials.White}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_10.geometry}
+                geometry={nodes.Plane027_2.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1205,13 +1193,13 @@ const Room: React.FC<GroupProps> = (props) => {
             <group position={[-0.157, 0.109, -0.14]} rotation={[0, 1.571, 0]}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_11.geometry}
+                geometry={nodes.Plane028_1.geometry}
                 material={materials.White}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_12.geometry}
+                geometry={nodes.Plane028_2.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1227,26 +1215,26 @@ const Room: React.FC<GroupProps> = (props) => {
           <group position={[-0.159, 0.932, 1.74]} rotation={[0, 1.571, 0]} scale={0.91}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane080_7.geometry}
+              geometry={nodes.Plane030_1.geometry}
               material={materials['Black']}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane080_8.geometry}
+              geometry={nodes.Plane030_2.geometry}
               material={materials['light.002']}
               receiveShadow={true}
             />
             <group position={[-0.088, 0.108, -0.07]} scale={0.609}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Circle011_7.geometry}
+                geometry={nodes.Circle015_1.geometry}
                 material={materials['Black.001']}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Circle011_8.geometry}
+                geometry={nodes.Circle015_2.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1317,13 +1305,13 @@ const Room: React.FC<GroupProps> = (props) => {
             <group position={[-0.157, 0.109, -0.14]}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_13.geometry}
+                geometry={nodes.Plane032_1.geometry}
                 material={materials.White}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_14.geometry}
+                geometry={nodes.Plane032_2.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1331,13 +1319,13 @@ const Room: React.FC<GroupProps> = (props) => {
             <group position={[-0.157, 0.109, -0.14]} rotation={[0, 1.571, 0]}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_15.geometry}
+                geometry={nodes.Plane033_1.geometry}
                 material={materials.White}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane081_16.geometry}
+                geometry={nodes.Plane033_2.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -1493,7 +1481,7 @@ const Room: React.FC<GroupProps> = (props) => {
             shadow-mapSize-width={4096}
           />
         </mesh>
-        {/* Shelf Books */}
+        {/* Shelf Car */}
         <mesh
           castShadow={true}
           geometry={nodes.Shelf.geometry}
@@ -1501,86 +1489,43 @@ const Room: React.FC<GroupProps> = (props) => {
           position={[-4, 3.912, -3.116]}
           receiveShadow={true}
         >
-          <group position={[0.317, 0.165, 0.682]} rotation={[-Math.PI / 2, 0, 0]} scale={1.571}>
+          <group position={[0.296, 0.298, 0.163]} rotation={[-Math.PI / 2, 0.003, 0]} scale={0.028}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane090.geometry}
-              material={materials.Book}
-              receiveShadow={false}
+              geometry={nodes.Torus001.geometry}
+              material={materials['Material.010']}
+              receiveShadow={true}
             />
-            <mesh geometry={nodes.Plane090_1.geometry} material={materials.White} />
-          </group>
-          <group position={[0.317, 0.165, 0.591]} rotation={[-Math.PI / 2, 0, 0]} scale={1.339}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane090_2.geometry}
-              material={materials.Book}
-              receiveShadow={false}
+              geometry={nodes.Torus001_1.geometry}
+              material={materials['Material.009']}
+              receiveShadow={true}
             />
-            <mesh geometry={nodes.Plane090_3.geometry} material={materials.White} />
-          </group>
-          <group position={[0.317, 0.165, 0.506]} rotation={[-Math.PI / 2, 0, 0]} scale={1.503}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane090_4.geometry}
-              material={materials.Book}
-              receiveShadow={false}
+              geometry={nodes.Torus001_2.geometry}
+              material={materials['Material.011']}
+              receiveShadow={true}
             />
-            <mesh geometry={nodes.Plane090_5.geometry} material={materials.White} />
-          </group>
-          <group position={[0.385, 0.165, 0.396]} rotation={[-Math.PI / 2, 0, 0]} scale={[1.111, 2.031, 1.111]}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane090_6.geometry}
-              material={materials.Book}
-              receiveShadow={false}
+              geometry={nodes.Torus001_3.geometry}
+              material={materials['Material.012']}
+              receiveShadow={true}
             />
-            <mesh geometry={nodes.Plane090_7.geometry} material={materials.White} />
-          </group>
-          <group position={[0.317, 0.165, 0.083]} rotation={[Math.PI / 2, 0, -Math.PI]} scale={-1.571}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane090_8.geometry}
-              material={materials.Book}
-              receiveShadow={false}
+              geometry={nodes.Torus001_4.geometry}
+              material={materials['Material.013']}
+              receiveShadow={true}
             />
-            <mesh geometry={nodes.Plane090_9.geometry} material={materials.White} />
-          </group>
-          <group position={[0.317, 0.165, 0.174]} rotation={[Math.PI / 2, 0, -Math.PI]} scale={-1.339}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane090_10.geometry}
-              material={materials.Book}
-              receiveShadow={false}
+              geometry={nodes.Torus001_5.geometry}
+              material={materials['Material.014']}
+              receiveShadow={true}
             />
-            <mesh geometry={nodes.Plane090_11.geometry} material={materials.White} />
-          </group>
-          <group position={[0.317, 0.165, 0.259]} rotation={[Math.PI / 2, 0, -Math.PI]} scale={-1.503}>
-            <mesh
-              castShadow={true}
-              geometry={nodes.Plane090_12.geometry}
-              material={materials.Book}
-              receiveShadow={false}
-            />
-            <mesh geometry={nodes.Plane090_13.geometry} material={materials.White} />
-          </group>
-          <group position={[0.317, 0.165, -0.101]} rotation={[Math.PI / 2, 0, -Math.PI]} scale={-1.339}>
-            <mesh
-              castShadow={true}
-              geometry={nodes.Plane090_14.geometry}
-              material={materials.Book}
-              receiveShadow={false}
-            />
-            <mesh geometry={nodes.Plane090_15.geometry} material={materials.White} />
-          </group>
-          <group position={[0.317, 0.165, -0.015]} rotation={[Math.PI / 2, 0, -Math.PI]} scale={-1.503}>
-            <mesh
-              castShadow={true}
-              geometry={nodes.Plane090_16.geometry}
-              material={materials.Book}
-              receiveShadow={false}
-            />
-            <mesh geometry={nodes.Plane090_17.geometry} material={materials.White} />
           </group>
         </mesh>
         {/* Shelf Plant */}
@@ -1719,8 +1664,8 @@ const Room: React.FC<GroupProps> = (props) => {
         >
           <mesh
             castShadow={false}
-            geometry={nodes.witcher.geometry}
-            material={materials.witcher}
+            geometry={nodes.forza.geometry}
+            material={materials.forza}
             position={[0, 0, 0.066]}
             receiveShadow={true}
             rotation={[Math.PI / 2, 0, 0]}
@@ -1738,8 +1683,8 @@ const Room: React.FC<GroupProps> = (props) => {
         >
           <mesh
             castShadow={false}
-            geometry={nodes.cp.geometry}
-            material={materials.cp}
+            geometry={nodes.halo.geometry}
+            material={materials.halo}
             position={[-0.004, 0.006, 0.068]}
             receiveShadow={true}
             rotation={[Math.PI / 2, 0, 0]}
@@ -1748,15 +1693,10 @@ const Room: React.FC<GroupProps> = (props) => {
         </mesh>
         {/* Chair */}
         <group position={[0.144, 0, -0.886]} scale={1.049}>
+          <mesh castShadow={true} geometry={nodes.Plane071.geometry} material={materials.White} receiveShadow={true} />
           <mesh
             castShadow={true}
             geometry={nodes.Plane071_1.geometry}
-            material={materials.White}
-            receiveShadow={true}
-          />
-          <mesh
-            castShadow={true}
-            geometry={nodes.Plane071_2.geometry}
             material={materials['Black']}
             receiveShadow={true}
           />
@@ -1853,7 +1793,7 @@ const Room: React.FC<GroupProps> = (props) => {
               material={materials.Metal}
               position={[0, -0.938, 0]}
               receiveShadow={true}
-              rotation={[0, -1.571, 0]}
+              rotation={[0, -Math.PI / 2, 0]}
               scale={0.67}
             >
               <mesh
@@ -1879,13 +1819,13 @@ const Room: React.FC<GroupProps> = (props) => {
           <group position={[0, 1.232, 0.613]} scale={1.128}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane072_1.geometry}
+              geometry={nodes.Plane072.geometry}
               material={materials.White}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane072_2.geometry}
+              geometry={nodes.Plane072_1.geometry}
               material={materials['Black']}
               receiveShadow={true}
             />
@@ -1910,13 +1850,13 @@ const Room: React.FC<GroupProps> = (props) => {
           <group position={[0.746, 1.685, 0.023]} scale={0.918}>
             <mesh
               castShadow={true}
-              geometry={nodes.Plane074_1.geometry}
+              geometry={nodes.Plane074.geometry}
               material={materials.White}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane074_2.geometry}
+              geometry={nodes.Plane074_1.geometry}
               material={materials['Black']}
               receiveShadow={true}
             />
@@ -1938,17 +1878,8 @@ const Room: React.FC<GroupProps> = (props) => {
           />
           <mesh
             castShadow={false}
-            geometry={nodes.netflix.geometry}
-            material={materials.netflix}
-            position={[0.085, 0.002, -0.112]}
-            receiveShadow={true}
-            rotation={[0, Math.PI / 2, 0]}
-            scale={2.532}
-          />
-          <mesh
-            castShadow={false}
             geometry={nodes.Plane016.geometry}
-            material={materials.Material}
+            material={materials['Material.001']}
             receiveShadow={true}
           />
           <mesh
@@ -1965,6 +1896,41 @@ const Room: React.FC<GroupProps> = (props) => {
             material={materials['Black']}
             receiveShadow={true}
           />
+          <mesh
+            castShadow={false}
+            geometry={nodes.Projector.geometry}
+            material={materials.Screen}
+            position={[0.05, 0.005, 0]}
+            receiveShadow={true}
+            rotation={[0, 1.571, 0]}
+            scale={2.532}
+          />
+        </group>
+        {/* Plant */}
+        <group position={[3.682, -0.005, -3.112]} scale={2.144}>
+          <mesh castShadow={true} geometry={nodes.Plane088.geometry} material={materials.Black} receiveShadow={true} />
+          <mesh
+            castShadow={true}
+            geometry={nodes.Plane088_1.geometry}
+            material={materials['Material.003']}
+            receiveShadow={true}
+          />
+          <mesh
+            castShadow={true}
+            geometry={nodes.Vert001.geometry}
+            material={materials.Green}
+            position={[0, 0.232, 0]}
+            receiveShadow={true}
+            scale={1.025}
+          >
+            <mesh
+              castShadow={true}
+              geometry={nodes.Plane066.geometry}
+              material={materials.Green}
+              position={[0.004, 0.522, 0]}
+              receiveShadow={true}
+            />
+          </mesh>
         </group>
         {/* Wall */}
         <mesh castShadow={false} geometry={nodes.Plane.geometry} material={materials.White} receiveShadow={true} />
