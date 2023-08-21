@@ -270,12 +270,14 @@ const Room: React.FC<GroupProps> = (props) => {
 
   const [desktopHovered, setDesktopHovered] = useState<boolean>(false);
   const [lightHovered, setLightHovered] = useState<boolean>(false);
+  const [phoneHovered, setPhoneHovered] = useState<boolean>(false);
+  const [phoneZoomed, setPhoneZoomed] = useState<boolean>(false);
   const [projectorHovered, setProjectorHovered] = useState<boolean>(false);
   const [projectorZoomed, setProjectorZoomed] = useState<boolean>(false);
   const [screenHovered, setScreenHovered] = useState<boolean>(false);
   const [screenZoomed, setScreenZoomed] = useState<boolean>(false);
 
-  useCursor(desktopHovered || lightHovered || projectorHovered || screenHovered, 'pointer', 'auto');
+  useCursor(desktopHovered || lightHovered || phoneHovered || projectorHovered || screenHovered, 'pointer', 'auto');
 
   const bulbMeshRef = useRef<Mesh>(null!);
   const fan1MeshRef = useRef<Mesh>(null!);
@@ -285,6 +287,7 @@ const Room: React.FC<GroupProps> = (props) => {
   const tvStandMeshRef = useRef<Mesh>(null!);
 
   const modelGroupRef = useRef<Group>(null!);
+  const phoneGroupRef = useRef<Group>(null!);
   const projectorGroupRef = useRef<Group>(null!);
   const screenGroupRef = useRef<Group>(null!);
 
@@ -308,6 +311,31 @@ const Room: React.FC<GroupProps> = (props) => {
       (controls as unknown as CameraControls).rotateAzimuthTo(Math.PI / 4, true),
       (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 3, true),
       (controls as unknown as CameraControls).fitToSphere(modelGroupRef.current, true)
+    ]);
+  }, [controls]);
+
+  const cameraToPhone = useCallback(async (): Promise<void> => {
+    if (!controls) return;
+
+    console.log('cameraToPhone');
+
+    // Modifying the controls, since it's not possible to 'lock' temporarily the camera
+    (controls as unknown as CameraControls).minAzimuthAngle = 0;
+    (controls as unknown as CameraControls).maxAzimuthAngle = 0;
+    (controls as unknown as CameraControls).minPolarAngle = 0;
+    (controls as unknown as CameraControls).maxPolarAngle = 0;
+
+    // Set the camera on the phone
+    await Promise.all([
+      (controls as unknown as CameraControls).rotateAzimuthTo(0, true),
+      (controls as unknown as CameraControls).rotatePolarTo(0, true),
+      (controls as unknown as CameraControls).fitToBox(phoneGroupRef.current, true, {
+        cover: true,
+        paddingTop: 0.4,
+        paddingRight: 0.4,
+        paddingBottom: 0.4,
+        paddingLeft: 0.4
+      })
     ]);
   }, [controls]);
 
@@ -369,6 +397,14 @@ const Room: React.FC<GroupProps> = (props) => {
     // Updating the material
     materials['ambiant light'] = newAmbiantLightMaterial;
     materials['ambiant light'].needsUpdate = true;
+  };
+
+  const handleClickPhone = (): void => {
+    // Setting the camera
+    phoneZoomed ? cameraToModel() : cameraToPhone();
+
+    // Updating the phone zoom status
+    setPhoneZoomed(!phoneZoomed);
   };
 
   const handleClickProjector = (): void => {
@@ -638,7 +674,15 @@ const Room: React.FC<GroupProps> = (props) => {
               </group>
             </group>
           </group>
-          <group position={[1.454, 1.75, 0.314]} rotation={[-Math.PI / 2, 0, 1.124]} scale={0.04}>
+          <group
+            onClick={handleClickPhone}
+            onPointerOut={() => setPhoneHovered(false)}
+            onPointerOver={() => setPhoneHovered(true)}
+            position={[1.454, 1.75, 0.314]}
+            ref={phoneGroupRef}
+            rotation={[-Math.PI / 2, 0, 1.124]}
+            scale={0.04}
+          >
             <group rotation={[Math.PI / 2, 0, 0]}>
               <mesh
                 castShadow={true}
@@ -746,6 +790,23 @@ const Room: React.FC<GroupProps> = (props) => {
                 rotation={[-Math.PI, 0, 0]}
                 scale={[1, 0.21, 1.424]}
               />
+
+              <Html
+                distanceFactor={8} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+                geometry={<planeGeometry args={[5.5, 10.5]} />}
+                occlude="blending"
+                position={[0.9, 0.38, 0.9]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                style={{
+                  background: '#0fff00'
+                  // height: 'screen.height',
+                  // width: 'screen.width'
+                }}
+                transform={true}
+                zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
+              >
+                <h6 style={{ color: '#000' }}>Hello World</h6>
+              </Html>
             </group>
           </group>
           <mesh
