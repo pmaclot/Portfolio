@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // Externals
-import { useCursor, useGLTF } from '@react-three/drei';
-import { GroupProps } from '@react-three/fiber';
+import { Html, useCursor, useGLTF } from '@react-three/drei';
+import { GroupProps, useThree } from '@react-three/fiber';
 import { EffectComposer, SelectiveBloom } from '@react-three/postprocessing';
 import randomColor from 'randomcolor';
 import { Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PointLight } from 'three';
@@ -240,6 +240,7 @@ type GLTFResult = GLTF & {
 
 const Room: React.FC<GroupProps> = (props) => {
   const { nodes, materials } = useGLTF('/models/room.glb') as GLTFResult;
+  const data = useThree();
 
   const [ambiantLight, setAmbiantLight] = useState<string>('#ab61ff');
   const [deskLight, setDeskLight] = useState<boolean>(true);
@@ -260,6 +261,10 @@ const Room: React.FC<GroupProps> = (props) => {
   const deskLightRef = useRef<PointLight>(null!);
   const desktopLightRef = useRef<PointLight>(null!);
   const shelfLightRef = useRef<PointLight>(null!);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const handleChangeAmbiantLight = (): void => {
     // Updating the ambiant light color
@@ -519,12 +524,6 @@ const Room: React.FC<GroupProps> = (props) => {
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Plane015_1.geometry}
-              material={materials.Screen}
-              receiveShadow={true}
-            />
-            <mesh
-              castShadow={true}
               geometry={nodes.Plane015_2.geometry}
               material={materials['ambiant light']}
               receiveShadow={true}
@@ -542,6 +541,24 @@ const Room: React.FC<GroupProps> = (props) => {
               material={materials.Metal}
               receiveShadow={true}
             />
+
+            <Html
+              // distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+              geometry={<bufferGeometry {...nodes.Plane015_1.geometry} />}
+              occlude="blending"
+              style={{
+                background: '#ff00ff',
+                position: 'absolute',
+                top: '-50px',
+                left: '-50px',
+                height: '100px',
+                width: '100px'
+              }}
+              transform={true}
+              zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
+            >
+              <h6 style={{ color: '#000' }}>Hello World</h6>
+            </Html>
           </group>
           <mesh
             castShadow={true}
@@ -775,7 +792,7 @@ const Room: React.FC<GroupProps> = (props) => {
             geometry={nodes.Circle003.geometry}
             material={materials.Metal}
             receiveShadow={true}
-            rotation={[0, 1.571, 0]}
+            rotation={[0, Math.PI / 2, 0]}
           />
           <mesh
             castShadow={true}
@@ -834,7 +851,7 @@ const Room: React.FC<GroupProps> = (props) => {
               receiveShadow={true}
             />
           </group>
-          <group position={[-0.159, 0.932, 1.02]} rotation={[0, 1.571, 0]} scale={0.91}>
+          <group position={[-0.159, 0.932, 1.02]} rotation={[0, Math.PI / 2, 0]} scale={0.91}>
             <mesh
               castShadow={true}
               geometry={nodes.Plane080_1.geometry}
@@ -889,7 +906,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[0.181, 0.11, -0.142]} rotation={[0, -1.571, 0]}>
+            <group position={[0.181, 0.11, -0.142]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle012_1.geometry}
@@ -903,7 +920,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[0.128, 0.11, -0.142]} rotation={[0, -1.571, 0]}>
+            <group position={[0.128, 0.11, -0.142]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle012_1.geometry}
@@ -938,7 +955,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[-0.157, 0.109, -0.14]} rotation={[0, 1.571, 0]}>
+            <group position={[-0.157, 0.109, -0.14]} rotation={[0, Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Plane018.geometry}
@@ -960,7 +977,7 @@ const Room: React.FC<GroupProps> = (props) => {
               receiveShadow={true}
             />
           </group>
-          <group position={[0.28, 0.932, 1.02]} rotation={[0, 1.571, 0]} scale={0.91}>
+          <group position={[0.28, 0.932, 1.02]} rotation={[0, Math.PI / 2, 0]} scale={0.91}>
             <mesh
               castShadow={true}
               geometry={nodes.Plane019.geometry}
@@ -1015,7 +1032,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[0.181, 0.11, -0.142]} rotation={[0, -1.571, 0]}>
+            <group position={[0.181, 0.11, -0.142]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle012_1.geometry}
@@ -1029,7 +1046,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[0.128, 0.11, -0.142]} rotation={[0, -1.571, 0]}>
+            <group position={[0.128, 0.11, -0.142]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle012_1.geometry}
@@ -1064,7 +1081,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[-0.157, 0.109, -0.14]} rotation={[0, 1.571, 0]}>
+            <group position={[-0.157, 0.109, -0.14]} rotation={[0, Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Plane022.geometry}
@@ -1086,7 +1103,7 @@ const Room: React.FC<GroupProps> = (props) => {
               receiveShadow={true}
             />
           </group>
-          <group position={[0.28, 0.932, 1.74]} rotation={[0, 1.571, 0]} scale={0.91}>
+          <group position={[0.28, 0.932, 1.74]} rotation={[0, Math.PI / 2, 0]} scale={0.91}>
             <mesh
               castShadow={true}
               geometry={nodes.Plane025_1.geometry}
@@ -1141,7 +1158,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[0.181, 0.11, -0.142]} rotation={[0, -1.571, 0]}>
+            <group position={[0.181, 0.11, -0.142]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle012_1.geometry}
@@ -1155,7 +1172,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[0.128, 0.11, -0.142]} rotation={[0, -1.571, 0]}>
+            <group position={[0.128, 0.11, -0.142]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle012_1.geometry}
@@ -1190,7 +1207,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[-0.157, 0.109, -0.14]} rotation={[0, 1.571, 0]}>
+            <group position={[-0.157, 0.109, -0.14]} rotation={[0, Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Plane028_1.geometry}
@@ -1212,7 +1229,7 @@ const Room: React.FC<GroupProps> = (props) => {
               receiveShadow={true}
             />
           </group>
-          <group position={[-0.159, 0.932, 1.74]} rotation={[0, 1.571, 0]} scale={0.91}>
+          <group position={[-0.159, 0.932, 1.74]} rotation={[0, Math.PI / 2, 0]} scale={0.91}>
             <mesh
               castShadow={true}
               geometry={nodes.Plane030_1.geometry}
@@ -1267,7 +1284,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[0.181, 0.11, -0.142]} rotation={[0, -1.571, 0]}>
+            <group position={[0.181, 0.11, -0.142]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle012_1.geometry}
@@ -1281,7 +1298,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[0.128, 0.11, -0.142]} rotation={[0, -1.571, 0]}>
+            <group position={[0.128, 0.11, -0.142]} rotation={[0, -Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Circle012_1.geometry}
@@ -1316,7 +1333,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 receiveShadow={true}
               />
             </group>
-            <group position={[-0.157, 0.109, -0.14]} rotation={[0, 1.571, 0]}>
+            <group position={[-0.157, 0.109, -0.14]} rotation={[0, Math.PI / 2, 0]}>
               <mesh
                 castShadow={true}
                 geometry={nodes.Plane033_1.geometry}
@@ -1361,7 +1378,7 @@ const Room: React.FC<GroupProps> = (props) => {
               material={nodes.Circle038.material}
               position={[0, 0.043, 0]}
               receiveShadow={true}
-              rotation={[0, 1.571, 0]}
+              rotation={[0, Math.PI / 2, 0]}
               scale={0.369}
             >
               <group position={[0, 3.26, 0]}>
@@ -1896,15 +1913,23 @@ const Room: React.FC<GroupProps> = (props) => {
             material={materials['Black']}
             receiveShadow={true}
           />
-          <mesh
-            castShadow={false}
-            geometry={nodes.Projector.geometry}
-            material={materials.Screen}
-            position={[0.05, 0.005, 0]}
-            receiveShadow={true}
-            rotation={[0, 1.571, 0]}
-            scale={2.532}
-          />
+
+          <Html
+            distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+            geometry={<planeGeometry args={[5, 2.5]} />}
+            occlude="blending"
+            position={[0, 0.001, 0]}
+            rotation={[-Math.PI / 2, 0, Math.PI / 2]}
+            style={{
+              background: '#ff00ff'
+              // height: 'screen.height',
+              // width: 'screen.width'
+            }}
+            transform={true}
+            zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
+          >
+            <h6 style={{ color: '#000' }}>Hello World</h6>
+          </Html>
         </group>
         {/* Plant */}
         <group position={[3.682, -0.005, -3.112]} scale={2.144}>
