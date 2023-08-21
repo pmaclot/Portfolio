@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 // Externals
-import { Bounds, CameraControls, Center, Html, useCursor, useGLTF } from '@react-three/drei';
+import { CameraControls, Html, useCursor, useGLTF } from '@react-three/drei';
 import { GroupProps, useThree } from '@react-three/fiber';
 import { EffectComposer, SelectiveBloom } from '@react-three/postprocessing';
 import randomColor from 'randomcolor';
@@ -10,6 +10,10 @@ import { GLTF } from 'three-stdlib';
 
 type GLTFResult = GLTF & {
   nodes: {
+    Button_Back_lambert1_0: Mesh;
+    Button_Home_lambert1_0: Mesh;
+    Button_Task_manager_lambert1_0: Mesh;
+    Camera_lambert1_0: Mesh;
     Circle001: Mesh;
     Circle002: Mesh;
     Circle003: Mesh;
@@ -87,6 +91,19 @@ type GLTFResult = GLTF & {
     Cylinder009: Mesh;
     Cylinder010: Mesh;
     Cylinder: Mesh;
+    forza: Mesh;
+    Glass_Front_lambert2_0: Mesh;
+    halo: Mesh;
+    Object_7: Mesh;
+    Object_8: Mesh;
+    Object_11: Mesh;
+    Phone_Back_Cover_lambert1_0: Mesh;
+    Phone_Back_Cover_lambert4_0: Mesh;
+    Phone_Font_Panel_Default_Material_0: Mesh;
+    Phone_Font_Panel_lambert1_0: Mesh;
+    Phone_Front_Cam_lambert1_0: Mesh;
+    Phone_Inside_Screen_Front_lambert5_0: Mesh;
+    Phone_Middle_Base_lambert3_0: Mesh;
     Plane001: Mesh;
     Plane002: Mesh;
     Plane003: Mesh;
@@ -188,6 +205,7 @@ type GLTFResult = GLTF & {
     Plane_2: Mesh;
     Poster001: Mesh;
     Poster: Mesh;
+    Power_BUtton_lambert1_0: Mesh;
     Projector: Mesh;
     Shelf001: Mesh;
     Shelf002: Mesh;
@@ -201,13 +219,13 @@ type GLTFResult = GLTF & {
     Torus001_5: Mesh;
     Vert001: Mesh;
     Vert: Mesh;
-    forza: Mesh;
-    halo: Mesh;
+    Volume_BUtton_lambert1_0: Mesh;
   };
   materials: {
     ['Black']: MeshStandardMaterial;
     ['Black.001']: MeshStandardMaterial;
     ['Black.002']: MeshStandardMaterial;
+    Default_Material: THREE.MeshStandardMaterial;
     Floor: MeshStandardMaterial;
     Glass: MeshPhysicalMaterial;
     Green: MeshStandardMaterial;
@@ -215,6 +233,7 @@ type GLTFResult = GLTF & {
     Screen: MeshStandardMaterial;
     Sofa: MeshStandardMaterial;
     White: MeshStandardMaterial;
+    Material: THREE.MeshStandardMaterial;
     ['Material.001']: MeshStandardMaterial;
     ['Material.003']: MeshStandardMaterial;
     ['Material.009']: MeshStandardMaterial;
@@ -224,6 +243,10 @@ type GLTFResult = GLTF & {
     ['Material.013']: MeshStandardMaterial;
     ['Material.014']: MeshStandardMaterial;
     ['ambiant light']: MeshStandardMaterial;
+    lambert1: THREE.MeshStandardMaterial;
+    lambert2: THREE.MeshStandardMaterial;
+    lambert4: THREE.MeshStandardMaterial;
+    lambert5: THREE.MeshStandardMaterial;
     ['light']: MeshStandardMaterial;
     ['light.001']: MeshStandardMaterial;
     ['light.002']: MeshStandardMaterial;
@@ -259,7 +282,6 @@ const Room: React.FC<GroupProps> = (props) => {
   const fan2MeshRef = useRef<Mesh>(null!);
   const desktop1MeshRef = useRef<Mesh>(null!);
   const desktop2MeshRef = useRef<Mesh>(null!);
-  const screenMeshRef = useRef<Mesh>(null!);
   const tvStandMeshRef = useRef<Mesh>(null!);
 
   const modelGroupRef = useRef<Group>(null!);
@@ -323,7 +345,7 @@ const Room: React.FC<GroupProps> = (props) => {
     await Promise.all([
       (controls as unknown as CameraControls).rotateAzimuthTo(0, true),
       (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2, true),
-      (controls as unknown as CameraControls).fitToBox(screenGroupRef.current, true, { cover: true, paddingTop: 0.2 })
+      (controls as unknown as CameraControls).fitToBox(screenGroupRef.current, true, { cover: true, paddingTop: 0.4 })
     ]);
   }, [controls]);
 
@@ -506,22 +528,22 @@ const Room: React.FC<GroupProps> = (props) => {
             receiveShadow={true}
           />
           <mesh castShadow={true} geometry={nodes.Circle002.geometry} material={materials.Metal} receiveShadow={true} />
-          <group position={[-1.407, 1.738, 0.461]} rotation={[-0.206, 0, 0]} scale={1.872}>
+          <group position={[-1.451, 1.735, 0.525]} rotation={[-0.206, 0, 0]} scale={1.872}>
             <mesh
               castShadow={true}
-              geometry={nodes.Circle005_1.geometry}
+              geometry={nodes.Circle005.geometry}
               material={materials.Metal}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Circle005_2.geometry}
+              geometry={nodes.Circle005_1.geometry}
               material={materials.White}
               receiveShadow={true}
             />
             <mesh
               castShadow={true}
-              geometry={nodes.Circle005_3.geometry}
+              geometry={nodes.Circle005_2.geometry}
               material={materials['Black']}
               receiveShadow={true}
             />
@@ -573,75 +595,158 @@ const Room: React.FC<GroupProps> = (props) => {
               visible={deskLight}
             />
           </mesh>
-          <mesh
-            castShadow={true}
-            geometry={nodes.Cup.geometry}
-            material={materials['Black']}
-            position={[1.672, 1.755, 0.505]}
-            receiveShadow={true}
-            rotation={[0, 0.586, 0]}
-            scale={3.042}
-          >
-            <mesh castShadow={true} geometry={nodes.Circle050.geometry} material={materials.v} receiveShadow={true} />
-            <mesh
-              castShadow={true}
-              geometry={nodes.Circle051.geometry}
-              material={materials['Black']}
-              receiveShadow={true}
-            />
-            <mesh
-              castShadow={true}
-              geometry={nodes.Circle052.geometry}
-              material={nodes.Circle052.material}
-              receiveShadow={true}
-            />
-          </mesh>
           <group
             onClick={handleClickScreen}
             onPointerOut={() => setScreenHovered(false)}
             onPointerOver={() => setScreenHovered(true)}
-            position={[0.038, 1.748, -0.666]}
+            position={[-0.183, 1.735, -0.278]}
             ref={screenGroupRef}
-            scale={1.19}
+            rotation={[-Math.PI / 2, 0, -1.579]}
+            scale={[2.8, 3.5, 2.8]}
           >
-            <mesh
-              castShadow={true}
-              geometry={nodes.Plane015.geometry}
-              material={materials['Black']}
-              receiveShadow={true}
-            />
-            <mesh
-              castShadow={true}
-              geometry={nodes.Plane015_2.geometry}
-              material={materials['ambiant light']}
-              receiveShadow={true}
-              ref={screenMeshRef}
-            />
-            <mesh
-              castShadow={true}
-              geometry={nodes.Circle004.geometry}
-              material={materials.Metal}
-              receiveShadow={true}
-            />
-            <mesh
-              castShadow={true}
-              geometry={nodes.Circle005.geometry}
-              material={materials.Metal}
-              receiveShadow={true}
-            />
+            <group rotation={[Math.PI / 2, 0, 0]}>
+              <group position={[-0.1, 0.196, 0]}>
+                <mesh
+                  castShadow={true}
+                  geometry={nodes.Object_7.geometry}
+                  material={materials['Black']}
+                  receiveShadow={true}
+                />
+                <mesh
+                  castShadow={true}
+                  geometry={nodes.Object_8.geometry}
+                  material={materials.Material}
+                  receiveShadow={true}
+                />
 
-            {/* <Html
-              distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
-              geometry={<bufferGeometry {...nodes.Plane015_1.geometry} />}
-              occlude="blending"
-              style={{
-                background: '#ffff00'
-              }}
-              transform={true}
-              zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
-            >
-              <h6 style={{ color: '#000' }}>Hello World</h6>
-            </Html> */}
+                <Html
+                  distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+                  geometry={<planeGeometry args={[0.605, 0.338]} />}
+                  occlude="blending"
+                  position={[0.102, 0.134, 0]}
+                  rotation={[-Math.PI / 2, Math.PI / 2.21, Math.PI / 2]}
+                  style={{
+                    background: '#ffff00'
+                    // height: 'screen.height',
+                    // width: 'screen.width'
+                  }}
+                  transform={true}
+                  zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
+                >
+                  <h6 style={{ color: '#000' }}>Hello World</h6>
+                </Html>
+              </group>
+            </group>
+          </group>
+          <group position={[1.454, 1.75, 0.314]} rotation={[-Math.PI / 2, 0, 1.124]} scale={0.04}>
+            <group rotation={[Math.PI / 2, 0, 0]}>
+              <mesh
+                castShadow={true}
+                geometry={nodes.Button_Back_lambert1_0.geometry}
+                material={materials.lambert1}
+                position={[-10.848, 0.419, -2.864]}
+                receiveShadow={true}
+                rotation={[0, 0, Math.PI]}
+                scale={0.699}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Button_Home_lambert1_0.geometry}
+                material={materials.lambert1}
+                position={[-5.591, 0.389, 1.11]}
+                receiveShadow={true}
+                scale={[1.407, 0.116, 0.513]}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Button_Task_manager_lambert1_0.geometry}
+                material={materials.lambert1}
+                position={[1.561, -0.124, -0.518]}
+                receiveShadow={true}
+                scale={1.273}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Power_BUtton_lambert1_0.geometry}
+                material={materials.lambert1}
+                position={[3.754, 0.157, 3.988]}
+                receiveShadow={true}
+                scale={[0.472, 0.459, 1]}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Volume_BUtton_lambert1_0.geometry}
+                material={materials.lambert1}
+                position={[2.295, 0.157, 3.988]}
+                receiveShadow={true}
+                scale={[1, 0.459, 1]}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Camera_lambert1_0.geometry}
+                material={materials.lambert1}
+                position={[4.373, 0.054, 0.999]}
+                receiveShadow={true}
+                scale={[1.653, 0.704, 1.653]}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Glass_Front_lambert2_0.geometry}
+                material={materials.lambert2}
+                position={[0.916, 0.365, 1.045]}
+                receiveShadow={true}
+                scale={[1, 0.021, 1]}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Phone_Back_Cover_lambert1_0.geometry}
+                material={materials.lambert1}
+                receiveShadow={true}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Phone_Back_Cover_lambert4_0.geometry}
+                material={materials.lambert4}
+                receiveShadow={true}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Phone_Font_Panel_Default_Material_0.geometry}
+                material={materials.Default_Material}
+                receiveShadow={true}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Phone_Font_Panel_lambert1_0.geometry}
+                material={materials.lambert1}
+                receiveShadow={true}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Phone_Front_Cam_lambert1_0.geometry}
+                material={materials.lambert1}
+                position={[6.479, 0.343, 2.66]}
+                receiveShadow={true}
+                scale={[0.333, 0.029, 0.333]}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Phone_Inside_Screen_Front_lambert5_0.geometry}
+                material={materials.lambert5}
+                position={[0.916, 0.314, 1.045]}
+                receiveShadow={true}
+                scale={[1, 0.021, 1]}
+              />
+              <mesh
+                castShadow={true}
+                geometry={nodes.Phone_Middle_Base_lambert3_0.geometry}
+                material={materials.Metal}
+                position={[0.583, 0.289, 1.044]}
+                receiveShadow={true}
+                rotation={[-Math.PI, 0, 0]}
+                scale={[1, 0.21, 1.424]}
+              />
+            </group>
           </group>
           <mesh
             castShadow={true}
@@ -668,36 +773,27 @@ const Room: React.FC<GroupProps> = (props) => {
           </mesh>
           <mesh
             castShadow={true}
-            geometry={nodes.Plane027.geometry}
-            material={materials['Black.001']}
-            position={[1.004, 1.746, 0.469]}
+            geometry={nodes.Plane026.geometry}
+            material={materials.Metal}
+            position={[0.849, 1.735, 0.543]}
             receiveShadow={true}
-            scale={1.151}
+            scale={1.26}
           >
             <mesh
               castShadow={true}
-              geometry={nodes.Plane026.geometry}
-              material={materials['Black']}
-              position={[-0.085, 0.001, 0.057]}
+              geometry={nodes.Cylinder.geometry}
+              material={materials.Metal}
+              position={[0.007, 0.042, -0.077]}
               receiveShadow={true}
-              scale={1.26}
+              scale={1.213}
             >
               <mesh
                 castShadow={true}
-                geometry={nodes.Cylinder.geometry}
-                material={materials.Metal}
-                position={[0.007, 0.042, -0.077]}
+                geometry={nodes.Cube.geometry}
+                material={nodes.Cube.material}
+                position={[0, 0.008, 0]}
                 receiveShadow={true}
-                scale={1.213}
-              >
-                <mesh
-                  castShadow={true}
-                  geometry={nodes.Cube.geometry}
-                  material={nodes.Cube.material}
-                  position={[0, 0.008, 0]}
-                  receiveShadow={true}
-                />
-              </mesh>
+              />
             </mesh>
           </mesh>
           <group
@@ -1279,13 +1375,13 @@ const Room: React.FC<GroupProps> = (props) => {
             <group position={[-0.157, 0.109, -0.14]}>
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane027_1.geometry}
+                geometry={nodes.Plane027.geometry}
                 material={materials.White}
                 receiveShadow={true}
               />
               <mesh
                 castShadow={true}
-                geometry={nodes.Plane027_2.geometry}
+                geometry={nodes.Plane027_1.geometry}
                 material={materials['light.002']}
                 receiveShadow={true}
               />
@@ -2005,7 +2101,7 @@ const Room: React.FC<GroupProps> = (props) => {
           />
 
           <Html
-            distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+            distanceFactor={4} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
             geometry={<planeGeometry args={[5, 2.5]} />}
             occlude="blending"
             position={[0, 0.001, 0]}
@@ -2065,15 +2161,7 @@ const Room: React.FC<GroupProps> = (props) => {
           lights={[deskLightRef, desktopLightRef, shelfLightRef]}
           luminanceSmoothing={0.025}
           luminanceThreshold={0.9}
-          selection={[
-            bulbMeshRef,
-            fan1MeshRef,
-            fan2MeshRef,
-            desktop1MeshRef,
-            desktop2MeshRef,
-            screenMeshRef,
-            tvStandMeshRef
-          ]}
+          selection={[bulbMeshRef, fan1MeshRef, fan2MeshRef, desktop1MeshRef, desktop2MeshRef, tvStandMeshRef]}
         />
       </EffectComposer>
     </>
