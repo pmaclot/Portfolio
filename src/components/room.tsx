@@ -2004,7 +2004,7 @@ const Room: React.FC<GroupProps> = (props) => {
             receiveShadow={true}
           />
 
-          {/* <Html
+          <Html
             distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
             geometry={<planeGeometry args={[5, 2.5]} />}
             occlude="blending"
@@ -2019,7 +2019,7 @@ const Room: React.FC<GroupProps> = (props) => {
             zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
           >
             <h6 style={{ color: '#000' }}>Hello World</h6>
-          </Html> */}
+          </Html>
         </group>
         {/* Plant */}
         <group position={[3.682, -0.005, -3.112]} scale={2.144}>
