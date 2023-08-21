@@ -14,9 +14,9 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => (
   <Box sx={{ height: '100vh', width: '100vw' }}>
-    <Header sx={{ position: 'fixed', top: 0, width: '100%', zIndex: 1 }} />
+    <Header sx={{ position: 'fixed', top: 0, width: '100%', zIndex: 200 }} />
     <Box sx={{ height: '100%', width: '100%', zIndex: 0 }}>{children}</Box>
-    <Footer sx={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 1 }} />
+    <Footer sx={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 200 }} />
   </Box>
 );
 

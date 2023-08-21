@@ -4,7 +4,7 @@ import React, { Suspense } from 'react';
 import Room from '../components/room';
 
 // Externals
-import { BakeShadows, OrbitControls, Stage } from '@react-three/drei';
+import { BakeShadows, CameraControls, Stage } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import type { HeadFC, PageProps } from 'gatsby';
 import { Flex, Spinner } from 'theme-ui';
@@ -24,16 +24,15 @@ const IndexPage: React.FC<PageProps> = () => {
           </Flex>
         }
       >
-        <Canvas camera={{ position: [10, 10, 10] }} linear={true} orthographic={true} shadows={true}>
-          <Stage adjustCamera={1.3} shadows={{ type: 'contact', frames: 1 }}>
+        <Canvas linear={true} orthographic={true} shadows={true}>
+          <Stage adjustCamera={false} shadows={{ type: 'contact', frames: 1 }}>
             <Room />
           </Stage>
 
           <BakeShadows />
 
-          <OrbitControls
-            enablePan={false}
-            enableZoom={false}
+          <CameraControls
+            enabled={true}
             makeDefault={true}
             maxAzimuthAngle={Math.PI / 2}
             maxPolarAngle={Math.PI / 3}

@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 // Externals
-import { Html, useCursor, useGLTF } from '@react-three/drei';
+import { Bounds, CameraControls, Center, Html, useCursor, useGLTF } from '@react-three/drei';
 import { GroupProps, useThree } from '@react-three/fiber';
 import { EffectComposer, SelectiveBloom } from '@react-three/postprocessing';
 import randomColor from 'randomcolor';
-import { Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PointLight } from 'three';
+import { Group, Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PointLight } from 'three';
 import { GLTF } from 'three-stdlib';
 
 type GLTFResult = GLTF & {
@@ -240,15 +240,19 @@ type GLTFResult = GLTF & {
 
 const Room: React.FC<GroupProps> = (props) => {
   const { nodes, materials } = useGLTF('/models/room.glb') as GLTFResult;
-  const data = useThree();
+  const { controls } = useThree();
 
   const [ambiantLight, setAmbiantLight] = useState<string>('#ab61ff');
   const [deskLight, setDeskLight] = useState<boolean>(true);
 
   const [desktopHovered, setDesktopHovered] = useState<boolean>(false);
   const [lightHovered, setLightHovered] = useState<boolean>(false);
+  const [projectorHovered, setProjectorHovered] = useState<boolean>(false);
+  const [projectorZoomed, setProjectorZoomed] = useState<boolean>(false);
+  const [screenHovered, setScreenHovered] = useState<boolean>(false);
+  const [screenZoomed, setScreenZoomed] = useState<boolean>(false);
 
-  useCursor(desktopHovered || lightHovered, 'pointer', 'auto');
+  useCursor(desktopHovered || lightHovered || projectorHovered || screenHovered, 'pointer', 'auto');
 
   const bulbMeshRef = useRef<Mesh>(null!);
   const fan1MeshRef = useRef<Mesh>(null!);
@@ -258,13 +262,74 @@ const Room: React.FC<GroupProps> = (props) => {
   const screenMeshRef = useRef<Mesh>(null!);
   const tvStandMeshRef = useRef<Mesh>(null!);
 
+  const modelGroupRef = useRef<Group>(null!);
+  const projectorGroupRef = useRef<Group>(null!);
+  const screenGroupRef = useRef<Group>(null!);
+
   const deskLightRef = useRef<PointLight>(null!);
   const desktopLightRef = useRef<PointLight>(null!);
   const shelfLightRef = useRef<PointLight>(null!);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const cameraToModel = useCallback(async (): Promise<void> => {
+    if (!controls) return;
+
+    console.log('cameraToModel');
+
+    // Resetting the controls, since it's not possible to 'lock' temporarily the camera
+    (controls as unknown as CameraControls).minAzimuthAngle = 0;
+    (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 2;
+    (controls as unknown as CameraControls).minPolarAngle = Math.PI / 3;
+    (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 3;
+
+    // Resetting the camera
+    await Promise.all([
+      (controls as unknown as CameraControls).rotateAzimuthTo(Math.PI / 4, true),
+      (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 3, true),
+      (controls as unknown as CameraControls).fitToSphere(modelGroupRef.current, true)
+    ]);
+  }, [controls]);
+
+  const cameraToProjector = useCallback(async (): Promise<void> => {
+    if (!controls) return;
+
+    console.log('cameraToProjector');
+
+    // Modifying the controls, since it's not possible to 'lock' temporarily the camera
+    (controls as unknown as CameraControls).minAzimuthAngle = Math.PI / 2;
+    (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 2;
+    (controls as unknown as CameraControls).minPolarAngle = Math.PI / 2;
+    (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 2;
+
+    // Set the camera on the projector
+    await Promise.all([
+      (controls as unknown as CameraControls).rotateAzimuthTo(Math.PI / 2, true),
+      (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2, true),
+      (controls as unknown as CameraControls).fitToBox(projectorGroupRef.current, true, { cover: true })
+    ]);
+  }, [controls]);
+
+  const cameraToScreen = useCallback(async (): Promise<void> => {
+    if (!controls) return;
+
+    console.log('cameraToScreen');
+
+    // Modifying the controls, since it's not possible to 'lock' temporarily the camera
+    (controls as unknown as CameraControls).minAzimuthAngle = 0;
+    (controls as unknown as CameraControls).maxAzimuthAngle = 0;
+    (controls as unknown as CameraControls).minPolarAngle = Math.PI / 2;
+    (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 2;
+
+    // Set the camera on the screen
+    await Promise.all([
+      (controls as unknown as CameraControls).rotateAzimuthTo(0, true),
+      (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2, true),
+      (controls as unknown as CameraControls).fitToBox(screenGroupRef.current, true, { cover: true, paddingTop: 0.2 })
+    ]);
+  }, [controls]);
+
+  useLayoutEffect(() => {
+    cameraToModel();
+  }, [cameraToModel]);
 
   const handleChangeAmbiantLight = (): void => {
     // Updating the ambiant light color
@@ -284,14 +349,30 @@ const Room: React.FC<GroupProps> = (props) => {
     materials['ambiant light'].needsUpdate = true;
   };
 
+  const handleClickProjector = (): void => {
+    // Setting the camera
+    projectorZoomed ? cameraToModel() : cameraToProjector();
+
+    // Updating the projector zoom status
+    setProjectorZoomed(!projectorZoomed);
+  };
+
+  const handleClickScreen = (): void => {
+    // Setting the camera
+    screenZoomed ? cameraToModel() : cameraToScreen();
+
+    // Updating the screen zoom status
+    setScreenZoomed(!screenZoomed);
+  };
+
   const handleToggleDeskLight = (): void => {
     // Updating the desk light
-    setDeskLight((prevDeskLight) => !prevDeskLight);
+    setDeskLight(!deskLight);
   };
 
   return (
     <>
-      <group {...props} dispose={null}>
+      <group dispose={null} ref={modelGroupRef} {...props}>
         {/* Sofa */}
         <mesh
           castShadow={true}
@@ -471,6 +552,13 @@ const Room: React.FC<GroupProps> = (props) => {
                 ref={bulbMeshRef}
               />
             </group>
+            <mesh
+              castShadow={true}
+              geometry={nodes.Vert.geometry}
+              material={materials.Metal}
+              position={[0, 0.128, 0]}
+              receiveShadow={true}
+            />
             <pointLight
               castShadow={true}
               color="#ffad63"
@@ -483,13 +571,6 @@ const Room: React.FC<GroupProps> = (props) => {
               shadow-mapSize-height={4096}
               shadow-mapSize-width={4096}
               visible={deskLight}
-            />
-            <mesh
-              castShadow={true}
-              geometry={nodes.Vert.geometry}
-              material={materials.Metal}
-              position={[0, 0.128, 0]}
-              receiveShadow={true}
             />
           </mesh>
           <mesh
@@ -515,7 +596,14 @@ const Room: React.FC<GroupProps> = (props) => {
               receiveShadow={true}
             />
           </mesh>
-          <group position={[0.038, 1.748, -0.666]} scale={1.19}>
+          <group
+            onClick={handleClickScreen}
+            onPointerOut={() => setScreenHovered(false)}
+            onPointerOver={() => setScreenHovered(true)}
+            position={[0.038, 1.748, -0.666]}
+            ref={screenGroupRef}
+            scale={1.19}
+          >
             <mesh
               castShadow={true}
               geometry={nodes.Plane015.geometry}
@@ -542,23 +630,18 @@ const Room: React.FC<GroupProps> = (props) => {
               receiveShadow={true}
             />
 
-            <Html
-              // distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+            {/* <Html
+              distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
               geometry={<bufferGeometry {...nodes.Plane015_1.geometry} />}
               occlude="blending"
               style={{
-                background: '#ff00ff',
-                position: 'absolute',
-                top: '-50px',
-                left: '-50px',
-                height: '100px',
-                width: '100px'
+                background: '#ffff00'
               }}
               transform={true}
               zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
             >
               <h6 style={{ color: '#000' }}>Hello World</h6>
-            </Html>
+            </Html> */}
           </group>
           <mesh
             castShadow={true}
@@ -1709,7 +1792,7 @@ const Room: React.FC<GroupProps> = (props) => {
           />
         </mesh>
         {/* Chair */}
-        <group position={[0.144, 0, -0.886]} scale={1.049}>
+        <group position={[0.144, 0, -0.886]} scale={1.049} visible={!projectorZoomed && !screenZoomed}>
           <mesh castShadow={true} geometry={nodes.Plane071.geometry} material={materials.White} receiveShadow={true} />
           <mesh
             castShadow={true}
@@ -1880,7 +1963,14 @@ const Room: React.FC<GroupProps> = (props) => {
           </group>
         </group>
         {/* Projector */}
-        <group position={[-3.91, 2.881, 0.859]} rotation={[0, 0, -Math.PI / 2]}>
+        <group
+          onClick={handleClickProjector}
+          onPointerOut={() => setProjectorHovered(false)}
+          onPointerOver={() => setProjectorHovered(true)}
+          position={[-3.91, 2.881, 0.859]}
+          ref={projectorGroupRef}
+          rotation={[0, 0, -Math.PI / 2]}
+        >
           <mesh
             castShadow={true}
             geometry={nodes.Plane083_1.geometry}
@@ -1914,7 +2004,7 @@ const Room: React.FC<GroupProps> = (props) => {
             receiveShadow={true}
           />
 
-          <Html
+          {/* <Html
             distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
             geometry={<planeGeometry args={[5, 2.5]} />}
             occlude="blending"
@@ -1929,7 +2019,7 @@ const Room: React.FC<GroupProps> = (props) => {
             zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
           >
             <h6 style={{ color: '#000' }}>Hello World</h6>
-          </Html>
+          </Html> */}
         </group>
         {/* Plant */}
         <group position={[3.682, -0.005, -3.112]} scale={2.144}>

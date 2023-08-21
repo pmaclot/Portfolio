@@ -38,7 +38,7 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   return (
     <React.Fragment>
-      {transitionSplashscreen(
+      {/* {transitionSplashscreen(
         (style, item) =>
           item && (
             <animated.div
@@ -58,7 +58,7 @@ const App: React.FC<AppProps> = ({ children }) => {
               <SplashScreen onReady={onReady} />
             </animated.div>
           )
-      )}
+      )} */}
       {children}
     </React.Fragment>
   );
