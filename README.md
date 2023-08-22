@@ -15,7 +15,7 @@ Welcome to my Gatsby.js and Three.js Website Repository! 🎉
 
 ## Technologies Used
 
-Gatsby.js | Three.js | HTML5 | CSS3 | JavaScript | [Add any other relevant technologies]
+Gatsby.js | Three.js | HTML5 | CSS3 | TypeScript
 
 ## Getting Started
 
@@ -29,12 +29,12 @@ To explore the code and launch the website locally, follow these steps:
 
 ## Live Demo
 
-[Include a link to the live demo of your website, if available]
+You can experience it live by clicking [here](https://pierremaclot.dev).
 
 ## Note
 
 This project is a continuous work in progress, and I'm actively exploring new features, optimizations, and enhancements. I'm excited to share my journey and learning experiences with the open-source community.
 
-Connect with me on [LinkedIn](#) to stay updated on my projects and professional journey.
+Connect with me on [LinkedIn](https://www.linkedin.com/in/pierre-maclot/) to stay updated on my projects and professional journey.
 
 Let's redefine the possibilities of web development together! 🌟
