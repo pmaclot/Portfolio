@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+// Contexts
+import RoomContext from '../context/room';
 
 // Externals
 import { navigate } from 'gatsby';
@@ -10,6 +13,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ sx }) => {
+  const { togglePhoneZoomed } = useContext(RoomContext);
+
   return (
     <Flex
       px={4}
@@ -18,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({ sx }) => {
       <Link as="h2" onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
         Pierre Maclot
       </Link>
-      <Link as="p" onClick={() => console.log('say hi.')} sx={{ cursor: 'pointer' }}>
+      <Link as="p" onClick={togglePhoneZoomed} sx={{ cursor: 'pointer' }}>
         Say hi.
       </Link>
     </Flex>

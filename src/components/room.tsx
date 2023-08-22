@@ -1,10 +1,14 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useLayoutEffect, useRef, useState } from 'react';
+
+// Contexts
+import RoomContext from '../context/room';
 
 // Externals
 import { CameraControls, Html, useCursor, useGLTF } from '@react-three/drei';
 import { GroupProps, useThree } from '@react-three/fiber';
 import { EffectComposer, SelectiveBloom } from '@react-three/postprocessing';
 import randomColor from 'randomcolor';
+import { useUpdateEffect } from 'react-use';
 import { Group, Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PointLight } from 'three';
 import { GLTF } from 'three-stdlib';
 
@@ -265,17 +269,17 @@ const Room: React.FC<GroupProps> = (props) => {
   const { nodes, materials } = useGLTF('/models/room.glb') as GLTFResult;
   const { controls } = useThree();
 
+  const { phoneZoomed, projectorZoomed, screenZoomed, togglePhoneZoomed, toggleProjectorZoomed, toggleScreenZoomed } =
+    useContext(RoomContext);
+
   const [ambiantLight, setAmbiantLight] = useState<string>('#ab61ff');
   const [deskLight, setDeskLight] = useState<boolean>(true);
 
   const [desktopHovered, setDesktopHovered] = useState<boolean>(false);
   const [lightHovered, setLightHovered] = useState<boolean>(false);
   const [phoneHovered, setPhoneHovered] = useState<boolean>(false);
-  const [phoneZoomed, setPhoneZoomed] = useState<boolean>(false);
   const [projectorHovered, setProjectorHovered] = useState<boolean>(false);
-  const [projectorZoomed, setProjectorZoomed] = useState<boolean>(false);
   const [screenHovered, setScreenHovered] = useState<boolean>(false);
-  const [screenZoomed, setScreenZoomed] = useState<boolean>(false);
 
   useCursor(desktopHovered || lightHovered || phoneHovered || projectorHovered || screenHovered, 'pointer', 'auto');
 
@@ -298,8 +302,6 @@ const Room: React.FC<GroupProps> = (props) => {
   const cameraToModel = useCallback(async (): Promise<void> => {
     if (!controls) return;
 
-    console.log('cameraToModel');
-
     // Resetting the controls, since it's not possible to 'lock' temporarily the camera
     (controls as unknown as CameraControls).minAzimuthAngle = 0;
     (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 2;
@@ -316,8 +318,6 @@ const Room: React.FC<GroupProps> = (props) => {
 
   const cameraToPhone = useCallback(async (): Promise<void> => {
     if (!controls) return;
-
-    console.log('cameraToPhone');
 
     // Modifying the controls, since it's not possible to 'lock' temporarily the camera
     (controls as unknown as CameraControls).minAzimuthAngle = 0;
@@ -342,8 +342,6 @@ const Room: React.FC<GroupProps> = (props) => {
   const cameraToProjector = useCallback(async (): Promise<void> => {
     if (!controls) return;
 
-    console.log('cameraToProjector');
-
     // Modifying the controls, since it's not possible to 'lock' temporarily the camera
     (controls as unknown as CameraControls).minAzimuthAngle = Math.PI / 2;
     (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 2;
@@ -360,8 +358,6 @@ const Room: React.FC<GroupProps> = (props) => {
 
   const cameraToScreen = useCallback(async (): Promise<void> => {
     if (!controls) return;
-
-    console.log('cameraToScreen');
 
     // Modifying the controls, since it's not possible to 'lock' temporarily the camera
     (controls as unknown as CameraControls).minAzimuthAngle = 0;
@@ -381,6 +377,18 @@ const Room: React.FC<GroupProps> = (props) => {
     cameraToModel();
   }, [cameraToModel]);
 
+  useUpdateEffect(() => {
+    phoneZoomed ? cameraToPhone() : cameraToModel();
+  }, [cameraToModel, cameraToPhone, phoneZoomed]);
+
+  useUpdateEffect(() => {
+    projectorZoomed ? cameraToProjector() : cameraToModel();
+  }, [cameraToModel, cameraToProjector, projectorZoomed]);
+
+  useUpdateEffect(() => {
+    screenZoomed ? cameraToScreen() : cameraToModel();
+  }, [cameraToModel, cameraToScreen, screenZoomed]);
+
   const handleChangeAmbiantLight = (): void => {
     // Updating the ambiant light color
     const newAmbiantLight = randomColor({ luminosity: 'dark' });
@@ -397,30 +405,6 @@ const Room: React.FC<GroupProps> = (props) => {
     // Updating the material
     materials['ambiant light'] = newAmbiantLightMaterial;
     materials['ambiant light'].needsUpdate = true;
-  };
-
-  const handleClickPhone = (): void => {
-    // Setting the camera
-    phoneZoomed ? cameraToModel() : cameraToPhone();
-
-    // Updating the phone zoom status
-    setPhoneZoomed(!phoneZoomed);
-  };
-
-  const handleClickProjector = (): void => {
-    // Setting the camera
-    projectorZoomed ? cameraToModel() : cameraToProjector();
-
-    // Updating the projector zoom status
-    setProjectorZoomed(!projectorZoomed);
-  };
-
-  const handleClickScreen = (): void => {
-    // Setting the camera
-    screenZoomed ? cameraToModel() : cameraToScreen();
-
-    // Updating the screen zoom status
-    setScreenZoomed(!screenZoomed);
   };
 
   const handleToggleDeskLight = (): void => {
@@ -632,7 +616,7 @@ const Room: React.FC<GroupProps> = (props) => {
             />
           </mesh>
           <group
-            onClick={handleClickScreen}
+            onClick={toggleScreenZoomed}
             onPointerOut={() => setScreenHovered(false)}
             onPointerOver={() => setScreenHovered(true)}
             position={[-0.183, 1.735, -0.278]}
@@ -661,21 +645,22 @@ const Room: React.FC<GroupProps> = (props) => {
                   occlude="blending"
                   position={[0.102, 0.134, 0]}
                   rotation={[-Math.PI / 2, Math.PI / 2.21, Math.PI / 2]}
-                  style={{
-                    background: '#ffff00'
-                    // height: 'screen.height',
-                    // width: 'screen.width'
-                  }}
+                  style={
+                    {
+                      // height: 'screen.height',
+                      // width: 'screen.width'
+                    }
+                  }
                   transform={true}
                   zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
                 >
-                  <h6 style={{ color: '#000' }}>Hello World</h6>
+                  <h6>Coming soon.</h6>
                 </Html>
               </group>
             </group>
           </group>
           <group
-            onClick={handleClickPhone}
+            onClick={togglePhoneZoomed}
             onPointerOut={() => setPhoneHovered(false)}
             onPointerOver={() => setPhoneHovered(true)}
             position={[1.454, 1.75, 0.314]}
@@ -797,15 +782,16 @@ const Room: React.FC<GroupProps> = (props) => {
                 occlude="blending"
                 position={[0.9, 0.38, 0.9]}
                 rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
-                style={{
-                  background: '#0fff00'
-                  // height: 'screen.height',
-                  // width: 'screen.width'
-                }}
+                style={
+                  {
+                    // height: 'screen.height',
+                    // width: 'screen.width'
+                  }
+                }
                 transform={true}
                 zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
               >
-                <h6 style={{ color: '#000' }}>Hello World</h6>
+                <h6>Coming soon.</h6>
               </Html>
             </group>
           </group>
@@ -2121,7 +2107,7 @@ const Room: React.FC<GroupProps> = (props) => {
         </group>
         {/* Projector */}
         <group
-          onClick={handleClickProjector}
+          onClick={toggleProjectorZoomed}
           onPointerOut={() => setProjectorHovered(false)}
           onPointerOver={() => setProjectorHovered(true)}
           position={[-3.91, 2.881, 0.859]}
@@ -2167,15 +2153,16 @@ const Room: React.FC<GroupProps> = (props) => {
             occlude="blending"
             position={[0, 0.001, 0]}
             rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-            style={{
-              background: '#ff00ff'
-              // height: 'screen.height',
-              // width: 'screen.width'
-            }}
+            style={
+              {
+                // height: 'screen.height',
+                // width: 'screen.width'
+              }
+            }
             transform={true}
             zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
           >
-            <h6 style={{ color: '#000' }}>Hello World</h6>
+            <h6>Coming soon.</h6>
           </Html>
         </group>
         {/* Plant */}
