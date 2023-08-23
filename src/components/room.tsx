@@ -2151,7 +2151,7 @@ const Room: React.FC<GroupProps> = (props) => {
             distanceFactor={4} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
             geometry={<planeGeometry args={[5, 2.5]} />}
             occlude="blending"
-            position={[0, 0.001, 0]}
+            position={[0, 0.01, 0]}
             rotation={[-Math.PI / 2, 0, Math.PI / 2]}
             style={
               {

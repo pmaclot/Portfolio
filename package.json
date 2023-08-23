@@ -21,8 +21,8 @@
     "@emotion/react": "^11.11.1",
     "@mdx-js/react": "^2.3.0",
     "@react-spring/web": "^9.7.3",
-    "@react-three/drei": "^9.74.15",
-    "@react-three/fiber": "^8.13.6",
+    "@react-three/drei": "^9.80.6",
+    "@react-three/fiber": "^8.13.7",
     "@react-three/postprocessing": "^2.15.0",
     "@theme-ui/mdx": "^0.16.0",
     "@theme-ui/preset-tosh": "^0.16.0",
@@ -39,7 +39,7 @@
     "react-use": "^17.4.0",
     "seedrandom": "^3.0.5",
     "theme-ui": "^0.16.0",
-    "three": "^0.153.0"
+    "three": "^0.154.0"
   },
   "devDependencies": {
     "@types/node": "^20.4.9",

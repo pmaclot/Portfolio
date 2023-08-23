@@ -3,7 +3,7 @@ import React, { useCallback, useLayoutEffect, useState } from 'react';
 // Externals
 import { animated, useTransition } from '@react-spring/web';
 import PropTypes from 'prop-types';
-import { useThemeUI } from 'theme-ui';
+import { Box, useThemeUI } from 'theme-ui';
 
 // Screens
 import SplashScreen from './screens/splashscreen';
@@ -19,8 +19,8 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   const transitionSplashscreen = useTransition(loading, {
     from: { opacity: '1' },
-    enter: { opacity: '1' },
-    leave: { opacity: '0' },
+    enter: { delay: 0, opacity: '1' },
+    leave: { delay: 500, opacity: '0' },
     onRest: () => {
       // Show body scrollbar
       document.body.style.overflow = 'auto';
@@ -59,7 +59,7 @@ const App: React.FC<AppProps> = ({ children }) => {
             </animated.div>
           )
       )}
-      {children}
+      <Box sx={{ display: loading ? 'none' : 'block' }}>{children}</Box>
     </React.Fragment>
   );
 };

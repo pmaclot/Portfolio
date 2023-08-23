@@ -24,7 +24,14 @@ const IndexPage: React.FC<PageProps> = () => {
           </Flex>
         }
       >
-        <Canvas linear={true} orthographic={true} shadows={true}>
+        <Canvas
+          camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0, 5] }}
+          dpr={[1, 2]}
+          frameloop="demand"
+          linear={true}
+          orthographic={true}
+          shadows={true}
+        >
           <Stage adjustCamera={false} shadows={{ type: 'contact', frames: 1 }}>
             <Room />
           </Stage>
