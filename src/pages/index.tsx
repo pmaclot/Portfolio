@@ -25,7 +25,7 @@ const IndexPage: React.FC<PageProps> = () => {
         }
       >
         <Canvas
-          camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0, 5] }}
+          camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0, 10] }}
           dpr={[1, 2]}
           frameloop="demand"
           linear={true}
@@ -41,9 +41,9 @@ const IndexPage: React.FC<PageProps> = () => {
           <CameraControls
             enabled={true}
             makeDefault={true}
-            maxAzimuthAngle={Math.PI / 2}
+            maxAzimuthAngle={Math.PI / 1.99999}
             maxPolarAngle={Math.PI / 3}
-            minAzimuthAngle={0}
+            minAzimuthAngle={0.00001}
             minPolarAngle={Math.PI / 3}
           />
         </Canvas>

@@ -303,8 +303,8 @@ const Room: React.FC<GroupProps> = (props) => {
     if (!controls) return;
 
     // Resetting the controls, since it's not possible to 'lock' temporarily the camera
-    (controls as unknown as CameraControls).minAzimuthAngle = 0;
-    (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 2;
+    (controls as unknown as CameraControls).minAzimuthAngle = 0.00001;
+    (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 1.99999;
     (controls as unknown as CameraControls).minPolarAngle = Math.PI / 3;
     (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 3;
 
@@ -320,14 +320,14 @@ const Room: React.FC<GroupProps> = (props) => {
     if (!controls) return;
 
     // Modifying the controls, since it's not possible to 'lock' temporarily the camera
-    (controls as unknown as CameraControls).minAzimuthAngle = 0;
-    (controls as unknown as CameraControls).maxAzimuthAngle = 0;
+    (controls as unknown as CameraControls).minAzimuthAngle = 0.00001;
+    (controls as unknown as CameraControls).maxAzimuthAngle = 0.00001;
     (controls as unknown as CameraControls).minPolarAngle = 0;
     (controls as unknown as CameraControls).maxPolarAngle = 0;
 
     // Set the camera on the phone
     await Promise.all([
-      (controls as unknown as CameraControls).rotateAzimuthTo(0, true),
+      (controls as unknown as CameraControls).rotateAzimuthTo(0.00001, true),
       (controls as unknown as CameraControls).rotatePolarTo(0, true),
       (controls as unknown as CameraControls).fitToBox(phoneGroupRef.current, true, {
         cover: true,
@@ -343,14 +343,14 @@ const Room: React.FC<GroupProps> = (props) => {
     if (!controls) return;
 
     // Modifying the controls, since it's not possible to 'lock' temporarily the camera
-    (controls as unknown as CameraControls).minAzimuthAngle = Math.PI / 2;
-    (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 2;
+    (controls as unknown as CameraControls).minAzimuthAngle = Math.PI / 2.00001;
+    (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 2.00001;
     (controls as unknown as CameraControls).minPolarAngle = Math.PI / 2;
     (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 2;
 
     // Set the camera on the projector
     await Promise.all([
-      (controls as unknown as CameraControls).rotateAzimuthTo(Math.PI / 2, true),
+      (controls as unknown as CameraControls).rotateAzimuthTo(Math.PI / 2.00001, true),
       (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2, true),
       (controls as unknown as CameraControls).fitToBox(projectorGroupRef.current, true, { cover: true })
     ]);
@@ -360,14 +360,14 @@ const Room: React.FC<GroupProps> = (props) => {
     if (!controls) return;
 
     // Modifying the controls, since it's not possible to 'lock' temporarily the camera
-    (controls as unknown as CameraControls).minAzimuthAngle = 0;
-    (controls as unknown as CameraControls).maxAzimuthAngle = 0;
+    (controls as unknown as CameraControls).minAzimuthAngle = 0.00001;
+    (controls as unknown as CameraControls).maxAzimuthAngle = 0.00001;
     (controls as unknown as CameraControls).minPolarAngle = Math.PI / 2;
     (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 2;
 
     // Set the camera on the screen
     await Promise.all([
-      (controls as unknown as CameraControls).rotateAzimuthTo(0, true),
+      (controls as unknown as CameraControls).rotateAzimuthTo(0.00001, true),
       (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2, true),
       (controls as unknown as CameraControls).fitToBox(screenGroupRef.current, true, { cover: true, paddingTop: 0.4 })
     ]);
@@ -414,7 +414,7 @@ const Room: React.FC<GroupProps> = (props) => {
 
   return (
     <>
-      <group dispose={null} ref={modelGroupRef} {...props}>
+      <group ref={modelGroupRef} {...props}>
         {/* Sofa */}
         <mesh
           castShadow={true}
@@ -424,6 +424,7 @@ const Room: React.FC<GroupProps> = (props) => {
           receiveShadow={true}
           rotation={[0, Math.PI / 2, 0]}
           scale={1.35}
+          visible={!projectorZoomed && !screenZoomed}
         >
           <mesh
             castShadow={true}
@@ -538,7 +539,7 @@ const Room: React.FC<GroupProps> = (props) => {
             rotation={[-Math.PI, 0, -Math.PI]}
           />
         </mesh>
-        {/* Desk */}
+        {/* Table */}
         <group position={[0.551, 0, -3.143]}>
           <mesh castShadow={true} geometry={nodes.Plane014.geometry} material={materials.White} receiveShadow={true} />
           <mesh
@@ -610,8 +611,6 @@ const Room: React.FC<GroupProps> = (props) => {
               ref={deskLightRef}
               rotation={[-Math.PI / 2, 0, 0]}
               scale={0.7}
-              shadow-mapSize-height={4096}
-              shadow-mapSize-width={4096}
               visible={deskLight}
             />
           </mesh>
@@ -781,7 +780,7 @@ const Room: React.FC<GroupProps> = (props) => {
                 geometry={<planeGeometry args={[5.5, 10.5]} />}
                 occlude="blending"
                 position={[0.9, 0.38, 0.9]}
-                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                rotation={[-Math.PI / 2.00001, 0, -Math.PI / 2]}
                 style={
                   {
                     // height: 'screen.height',
@@ -993,8 +992,6 @@ const Room: React.FC<GroupProps> = (props) => {
               position={[0.074, 0.935, -0.254]}
               ref={desktopLightRef}
               rotation={[-Math.PI / 2, 0, 0]}
-              shadow-mapSize-height={4096}
-              shadow-mapSize-width={4096}
             />
           </group>
         </group>
@@ -1720,8 +1717,6 @@ const Room: React.FC<GroupProps> = (props) => {
             position={[0.196, 1.188, -0.01]}
             ref={shelfLightRef}
             rotation={[-Math.PI / 2, 0, 0]}
-            shadow-mapSize-height={4096}
-            shadow-mapSize-width={4096}
           />
         </mesh>
         {/* Shelf Car */}
@@ -2152,7 +2147,7 @@ const Room: React.FC<GroupProps> = (props) => {
             geometry={<planeGeometry args={[5, 2.5]} />}
             occlude="blending"
             position={[0, 0.01, 0]}
-            rotation={[-Math.PI / 2, 0, Math.PI / 2]}
+            rotation={[-Math.PI / 2.00001, 0, Math.PI / 2]}
             style={
               {
                 // height: 'screen.height',
