@@ -1,5 +1,10 @@
 import React, { useCallback, useContext, useLayoutEffect, useRef, useState } from 'react';
 
+// Compononents
+import Phone from './phone';
+import Projector from './projector';
+import Screen from './screen';
+
 // Contexts
 import RoomContext from '../context/room';
 
@@ -8,7 +13,6 @@ import { CameraControls, Html, useCursor, useGLTF } from '@react-three/drei';
 import { GroupProps, useThree } from '@react-three/fiber';
 import { EffectComposer, SelectiveBloom } from '@react-three/postprocessing';
 import randomColor from 'randomcolor';
-import { useUpdateEffect } from 'react-use';
 import { Group, Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PointLight } from 'three';
 import { GLTF } from 'three-stdlib';
 
@@ -281,7 +285,15 @@ const Room: React.FC<GroupProps> = (props) => {
   const [projectorHovered, setProjectorHovered] = useState<boolean>(false);
   const [screenHovered, setScreenHovered] = useState<boolean>(false);
 
-  useCursor(desktopHovered || lightHovered || phoneHovered || projectorHovered || screenHovered, 'pointer', 'auto');
+  useCursor(
+    desktopHovered ||
+      lightHovered ||
+      (phoneHovered && !phoneZoomed) ||
+      (projectorHovered && !projectorZoomed) ||
+      (screenHovered && !screenZoomed),
+    'pointer',
+    'auto'
+  );
 
   const bulbMeshRef = useRef<Mesh>(null!);
   const fan1MeshRef = useRef<Mesh>(null!);
@@ -331,10 +343,10 @@ const Room: React.FC<GroupProps> = (props) => {
       (controls as unknown as CameraControls).rotatePolarTo(0, true),
       (controls as unknown as CameraControls).fitToBox(phoneGroupRef.current, true, {
         cover: true,
-        paddingTop: 0.4,
-        paddingRight: 0.4,
-        paddingBottom: 0.4,
-        paddingLeft: 0.4
+        paddingTop: 0.2,
+        paddingRight: 0.2,
+        paddingBottom: 0.2,
+        paddingLeft: 0.2
       })
     ]);
   }, [controls]);
@@ -343,14 +355,14 @@ const Room: React.FC<GroupProps> = (props) => {
     if (!controls) return;
 
     // Modifying the controls, since it's not possible to 'lock' temporarily the camera
-    (controls as unknown as CameraControls).minAzimuthAngle = Math.PI / 2.00001;
-    (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 2.00001;
+    (controls as unknown as CameraControls).minAzimuthAngle = Math.PI / 1.99999;
+    (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 1.99999;
     (controls as unknown as CameraControls).minPolarAngle = Math.PI / 2;
     (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 2;
 
     // Set the camera on the projector
     await Promise.all([
-      (controls as unknown as CameraControls).rotateAzimuthTo(Math.PI / 2.00001, true),
+      (controls as unknown as CameraControls).rotateAzimuthTo(Math.PI / 1.99999, true),
       (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2, true),
       (controls as unknown as CameraControls).fitToBox(projectorGroupRef.current, true, { cover: true })
     ]);
@@ -374,20 +386,11 @@ const Room: React.FC<GroupProps> = (props) => {
   }, [controls]);
 
   useLayoutEffect(() => {
-    cameraToModel();
-  }, [cameraToModel]);
-
-  useUpdateEffect(() => {
-    phoneZoomed ? cameraToPhone() : cameraToModel();
-  }, [cameraToModel, cameraToPhone, phoneZoomed]);
-
-  useUpdateEffect(() => {
-    projectorZoomed ? cameraToProjector() : cameraToModel();
-  }, [cameraToModel, cameraToProjector, projectorZoomed]);
-
-  useUpdateEffect(() => {
-    screenZoomed ? cameraToScreen() : cameraToModel();
-  }, [cameraToModel, cameraToScreen, screenZoomed]);
+    if (!phoneZoomed && !projectorZoomed && !screenZoomed) cameraToModel();
+    else if (phoneZoomed) cameraToPhone();
+    else if (projectorZoomed) cameraToProjector();
+    else if (screenZoomed) cameraToScreen();
+  }, [cameraToModel, cameraToPhone, cameraToProjector, cameraToScreen, phoneZoomed, projectorZoomed, screenZoomed]);
 
   const handleChangeAmbiantLight = (): void => {
     // Updating the ambiant light color
@@ -615,9 +618,6 @@ const Room: React.FC<GroupProps> = (props) => {
             />
           </mesh>
           <group
-            onClick={toggleScreenZoomed}
-            onPointerOut={() => setScreenHovered(false)}
-            onPointerOver={() => setScreenHovered(true)}
             position={[-0.183, 1.735, -0.278]}
             ref={screenGroupRef}
             rotation={[-Math.PI / 2, 0, -1.579]}
@@ -639,34 +639,31 @@ const Room: React.FC<GroupProps> = (props) => {
                 />
 
                 <Html
-                  distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+                  distanceFactor={0.8} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   geometry={<planeGeometry args={[0.605, 0.338]} />}
                   occlude="blending"
                   position={[0.102, 0.134, 0]}
                   rotation={[-Math.PI / 2, Math.PI / 2.21, Math.PI / 2]}
-                  style={
-                    {
-                      // height: 'screen.height',
-                      // width: 'screen.width'
-                    }
-                  }
+                  style={{
+                    height: 135,
+                    width: 245
+                  }}
                   transform={true}
                   zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
                 >
-                  <h6>Coming soon.</h6>
+                  <div
+                    onClick={!screenZoomed ? toggleScreenZoomed : undefined}
+                    onPointerOut={() => setScreenHovered(false)}
+                    onPointerOver={() => setScreenHovered(true)}
+                    style={{ height: '100%', width: '100%' }}
+                  >
+                    <Screen toggleScreenZoomed={toggleScreenZoomed} />
+                  </div>
                 </Html>
               </group>
             </group>
           </group>
-          <group
-            onClick={togglePhoneZoomed}
-            onPointerOut={() => setPhoneHovered(false)}
-            onPointerOver={() => setPhoneHovered(true)}
-            position={[1.454, 1.75, 0.314]}
-            ref={phoneGroupRef}
-            rotation={[-Math.PI / 2, 0, 1.124]}
-            scale={0.04}
-          >
+          <group position={[1.454, 1.75, 0.314]} ref={phoneGroupRef} rotation={[-Math.PI / 2, 0, 1.124]} scale={0.04}>
             <group rotation={[Math.PI / 2, 0, 0]}>
               <mesh
                 castShadow={true}
@@ -776,21 +773,26 @@ const Room: React.FC<GroupProps> = (props) => {
               />
 
               <Html
-                distanceFactor={8} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+                distanceFactor={6} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 geometry={<planeGeometry args={[5.5, 10.5]} />}
                 occlude="blending"
-                position={[0.9, 0.38, 0.9]}
+                position={[0.9, 0.38, 1.05]}
                 rotation={[-Math.PI / 2.00001, 0, -Math.PI / 2]}
-                style={
-                  {
-                    // height: 'screen.height',
-                    // width: 'screen.width'
-                  }
-                }
+                style={{
+                  height: 700,
+                  width: 350
+                }}
                 transform={true}
                 zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
               >
-                <h6>Coming soon.</h6>
+                <div
+                  onClick={!phoneZoomed ? togglePhoneZoomed : undefined}
+                  onPointerOut={() => setPhoneHovered(false)}
+                  onPointerOver={() => setPhoneHovered(true)}
+                  style={{ height: '100%', width: '100%' }}
+                >
+                  <Phone togglePhoneZoomed={togglePhoneZoomed} />
+                </div>
               </Html>
             </group>
           </group>
@@ -2101,14 +2103,7 @@ const Room: React.FC<GroupProps> = (props) => {
           </group>
         </group>
         {/* Projector */}
-        <group
-          onClick={toggleProjectorZoomed}
-          onPointerOut={() => setProjectorHovered(false)}
-          onPointerOver={() => setProjectorHovered(true)}
-          position={[-3.91, 2.881, 0.859]}
-          ref={projectorGroupRef}
-          rotation={[0, 0, -Math.PI / 2]}
-        >
+        <group position={[-3.91, 2.881, 0.859]} ref={projectorGroupRef} rotation={[0, 0, -Math.PI / 2]}>
           <mesh
             castShadow={true}
             geometry={nodes.Plane083_1.geometry}
@@ -2146,18 +2141,23 @@ const Room: React.FC<GroupProps> = (props) => {
             distanceFactor={4} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
             geometry={<planeGeometry args={[5, 2.5]} />}
             occlude="blending"
-            position={[0, 0.01, 0]}
+            position={[0.01, 0.01, 0]}
             rotation={[-Math.PI / 2.00001, 0, Math.PI / 2]}
-            style={
-              {
-                // height: 'screen.height',
-                // width: 'screen.width'
-              }
-            }
+            style={{
+              height: 250,
+              width: 500
+            }}
             transform={true}
             zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
           >
-            <h6>Coming soon.</h6>
+            <div
+              onClick={!projectorZoomed ? toggleProjectorZoomed : undefined}
+              onPointerOut={() => setProjectorHovered(false)}
+              onPointerOver={() => setProjectorHovered(true)}
+              style={{ height: '100%', width: '100%' }}
+            >
+              <Projector toggleProjectorZoomed={toggleProjectorZoomed} />
+            </div>
           </Html>
         </group>
         {/* Plant */}

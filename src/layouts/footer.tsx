@@ -19,10 +19,10 @@ const Footer: React.FC<FooterProps> = ({ sx }) => {
       px={4}
       sx={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', minHeight: '72px', ...sx }}
     >
-      <Link as="p" onClick={toggleProjectorZoomed} sx={{ cursor: 'pointer' }}>
+      <Link onClick={toggleProjectorZoomed} sx={{ color: 'primary', cursor: 'pointer' }}>
         Portfolio.
       </Link>
-      <Link as="p" onClick={toggleScreenZoomed} sx={{ cursor: 'pointer' }}>
+      <Link onClick={toggleScreenZoomed} sx={{ color: 'primary', cursor: 'pointer' }}>
         Experience.
       </Link>
     </Flex>

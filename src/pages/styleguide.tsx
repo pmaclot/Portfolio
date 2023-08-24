@@ -1,12 +1,26 @@
 import React, { useEffect } from 'react';
 
 // Externals
-import { ColorPalette, FontFamily, HeadingStyle, TypeScale, TypeStyle, useTheme } from '@theme-ui/style-guide';
+import { ColorPalette, FontFamily, HeadingStyle, TypeScale, TypeStyle } from '@theme-ui/style-guide';
 import type { HeadFC, PageProps } from 'gatsby';
-import { Box, Checkbox, Container, Divider, Flex, Input, Label, Radio, Select, Textarea } from 'theme-ui';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Divider,
+  Flex,
+  Heading,
+  Input,
+  Label,
+  Radio,
+  Select,
+  Textarea,
+  useThemeUI
+} from 'theme-ui';
 
 const StyleGuidePage: React.FC<PageProps> = () => {
-  const theme = useTheme();
+  const { theme } = useThemeUI();
 
   useEffect(() => {
     console.log(theme);
@@ -14,10 +28,14 @@ const StyleGuidePage: React.FC<PageProps> = () => {
 
   return (
     <Container p={4}>
-      <h2>Colors</h2>
+      <Heading as="h2" sx={{ my: 3 }}>
+        Colors
+      </Heading>
       <ColorPalette />
       <Divider />
-      <h2>Typography</h2>
+      <Heading as="h2" sx={{ my: 3 }}>
+        Typography
+      </Heading>
       <TypeStyle>
         Body: <FontFamily name="body" />
       </TypeStyle>
@@ -25,10 +43,14 @@ const StyleGuidePage: React.FC<PageProps> = () => {
         Heading: <FontFamily name="heading" />
       </HeadingStyle>
       <Divider />
-      <h2>TypeScale</h2>
+      <Heading as="h2" sx={{ my: 3 }}>
+        TypeScale
+      </Heading>
       <TypeScale />
       <Divider />
-      <h2>Form</h2>
+      <Heading as="h2" sx={{ my: 3 }}>
+        Form
+      </Heading>
       <Box as="form" onSubmit={(e) => e.preventDefault()} pb={3} sx={{ width: '100%', maxWidth: '500px' }}>
         <Label htmlFor="username">Username</Label>
         <Input id="username" mb={3} />
@@ -60,6 +82,11 @@ const StyleGuidePage: React.FC<PageProps> = () => {
           </Label>
         </Flex>
       </Box>
+      <Divider />
+      <Heading as="h2" sx={{ my: 3 }}>
+        Buttons
+      </Heading>
+      <Button onClick={() => console.log('beep')}>Beep</Button>
       {/* More examples */}
     </Container>
   );

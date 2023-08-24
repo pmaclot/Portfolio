@@ -29,20 +29,26 @@ class RoomProvider extends React.Component<{ children: React.ReactNode }> {
 
   togglePhoneZoomed = () => {
     let phoneZoomed = !this.state.phoneZoomed;
+    let projectorZoomed = false;
+    let screenZoomed = false;
 
-    this.setState({ phoneZoomed });
+    this.setState({ phoneZoomed, projectorZoomed, screenZoomed });
   };
 
   toggleProjectorZoomed = () => {
+    let phoneZoomed = false;
     let projectorZoomed = !this.state.projectorZoomed;
+    let screenZoomed = false;
 
-    this.setState({ projectorZoomed });
+    this.setState({ phoneZoomed, projectorZoomed, screenZoomed });
   };
 
   toggleScreenZoomed = () => {
+    let phoneZoomed = false;
+    let projectorZoomed = false;
     let screenZoomed = !this.state.screenZoomed;
 
-    this.setState({ screenZoomed });
+    this.setState({ phoneZoomed, projectorZoomed, screenZoomed });
   };
 
   render() {

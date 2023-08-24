@@ -20,10 +20,10 @@ const Header: React.FC<HeaderProps> = ({ sx }) => {
       px={4}
       sx={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', minHeight: '72px', ...sx }}
     >
-      <Link as="h2" onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
+      <Link as="h2" onClick={() => navigate('/')} sx={{ color: 'primary', cursor: 'pointer' }}>
         Pierre Maclot
       </Link>
-      <Link as="p" onClick={togglePhoneZoomed} sx={{ cursor: 'pointer' }}>
+      <Link onClick={togglePhoneZoomed} sx={{ color: 'primary', cursor: 'pointer' }}>
         Say hi.
       </Link>
     </Flex>
