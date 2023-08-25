@@ -18,7 +18,7 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
         width: '100%'
       }}
     >
-      <h3 style={{ marginBottom: 10 }}>Coming soon.</h3>
+      <h3>Coming soon.</h3>
       <Button
         onClick={toggleScreenZoomed}
         sx={{

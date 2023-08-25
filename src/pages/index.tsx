@@ -42,9 +42,10 @@ const IndexPage: React.FC<PageProps> = () => {
             enabled={true}
             makeDefault={true}
             maxAzimuthAngle={Math.PI / 1.99999}
-            maxPolarAngle={Math.PI / 3}
+            maxPolarAngle={Math.PI / 2}
             minAzimuthAngle={0.00001}
-            minPolarAngle={Math.PI / 3}
+            minPolarAngle={0}
+            smoothTime={0.5}
           />
         </Canvas>
       </Suspense>

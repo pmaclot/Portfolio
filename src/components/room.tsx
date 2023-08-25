@@ -317,8 +317,8 @@ const Room: React.FC<GroupProps> = (props) => {
     // Resetting the controls, since it's not possible to 'lock' temporarily the camera
     (controls as unknown as CameraControls).minAzimuthAngle = 0.00001;
     (controls as unknown as CameraControls).maxAzimuthAngle = Math.PI / 1.99999;
-    (controls as unknown as CameraControls).minPolarAngle = Math.PI / 3;
-    (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 3;
+    (controls as unknown as CameraControls).minPolarAngle = 0;
+    (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 2;
 
     // Resetting the camera
     await Promise.all([
@@ -374,13 +374,13 @@ const Room: React.FC<GroupProps> = (props) => {
     // Modifying the controls, since it's not possible to 'lock' temporarily the camera
     (controls as unknown as CameraControls).minAzimuthAngle = 0.00001;
     (controls as unknown as CameraControls).maxAzimuthAngle = 0.00001;
-    (controls as unknown as CameraControls).minPolarAngle = Math.PI / 2;
-    (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 2;
+    (controls as unknown as CameraControls).minPolarAngle = Math.PI / 2.21;
+    (controls as unknown as CameraControls).maxPolarAngle = Math.PI / 2.21;
 
     // Set the camera on the screen
     await Promise.all([
       (controls as unknown as CameraControls).rotateAzimuthTo(0.00001, true),
-      (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2, true),
+      (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2.21, true),
       (controls as unknown as CameraControls).fitToBox(screenGroupRef.current, true, { cover: true, paddingTop: 0.4 })
     ]);
   }, [controls]);
@@ -639,14 +639,14 @@ const Room: React.FC<GroupProps> = (props) => {
                 />
 
                 <Html
-                  distanceFactor={0.8} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+                  distanceFactor={0.2} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   geometry={<planeGeometry args={[0.605, 0.338]} />}
                   occlude="blending"
                   position={[0.102, 0.134, 0]}
                   rotation={[-Math.PI / 2, Math.PI / 2.21, Math.PI / 2]}
                   style={{
-                    height: 135,
-                    width: 245
+                    height: 680,
+                    width: 1220
                   }}
                   transform={true}
                   zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])
@@ -2138,14 +2138,14 @@ const Room: React.FC<GroupProps> = (props) => {
           />
 
           <Html
-            distanceFactor={4} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
+            distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
             geometry={<planeGeometry args={[5, 2.5]} />}
             occlude="blending"
             position={[0.01, 0.01, 0]}
             rotation={[-Math.PI / 2.00001, 0, Math.PI / 2]}
             style={{
-              height: 250,
-              width: 500
+              height: 1000,
+              width: 2000
             }}
             transform={true}
             zIndexRange={[100, 10]} // Z-order range (default=[16777271, 0])

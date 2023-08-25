@@ -18,7 +18,7 @@ const Projector: React.FC<ProjectorProps> = ({ toggleProjectorZoomed }) => {
         width: '100%'
       }}
     >
-      <h3 style={{ marginBottom: 10 }}>Coming soon.</h3>
+      <h3>Coming soon.</h3>
       <Button
         onClick={toggleProjectorZoomed}
         sx={{
