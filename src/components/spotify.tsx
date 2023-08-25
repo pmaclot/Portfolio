@@ -2,9 +2,7 @@ import React, { useLayoutEffect } from 'react';
 
 const Spotify: React.FC = () => {
   useLayoutEffect(() => {
-    const element = document.querySelector('[title="Play"]') as HTMLButtonElement;
-
-    console.log(element);
+    const element = document.querySelector('[aria-label="Play"]') as HTMLButtonElement;
 
     if (element) element.click();
   }, []);
