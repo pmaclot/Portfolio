@@ -273,13 +273,21 @@ const Room: React.FC<GroupProps> = (props) => {
   const { nodes, materials } = useGLTF('/models/room.glb') as GLTFResult;
   const { controls } = useThree();
 
-  const { phoneZoomed, projectorZoomed, screenZoomed, togglePhoneZoomed, toggleProjectorZoomed, toggleScreenZoomed } =
-    useContext(RoomContext);
+  const {
+    phoneZoomed,
+    projectorZoomed,
+    screenZoomed,
+    togglePhoneZoomed,
+    toggleProjectorZoomed,
+    toggleScreenZoomed,
+    toggleSpotifyPlayer
+  } = useContext(RoomContext);
 
   const [ambiantLight, setAmbiantLight] = useState<string>('#ab61ff');
   const [deskLight, setDeskLight] = useState<boolean>(true);
 
   const [desktopHovered, setDesktopHovered] = useState<boolean>(false);
+  const [headphonesHovered, setHeadphonesHovered] = useState<boolean>(false);
   const [lightHovered, setLightHovered] = useState<boolean>(false);
   const [phoneHovered, setPhoneHovered] = useState<boolean>(false);
   const [projectorHovered, setProjectorHovered] = useState<boolean>(false);
@@ -287,6 +295,7 @@ const Room: React.FC<GroupProps> = (props) => {
 
   useCursor(
     desktopHovered ||
+      headphonesHovered ||
       lightHovered ||
       (phoneHovered && !phoneZoomed) ||
       (projectorHovered && !projectorZoomed) ||
@@ -552,7 +561,14 @@ const Room: React.FC<GroupProps> = (props) => {
             receiveShadow={true}
           />
           <mesh castShadow={true} geometry={nodes.Circle002.geometry} material={materials.Metal} receiveShadow={true} />
-          <group position={[-1.451, 1.735, 0.525]} rotation={[-0.206, 0, 0]} scale={1.872}>
+          <group
+            onClick={toggleSpotifyPlayer}
+            onPointerOut={() => setHeadphonesHovered(false)}
+            onPointerOver={() => setHeadphonesHovered(true)}
+            position={[-1.451, 1.735, 0.525]}
+            rotation={[-0.206, 0, 0]}
+            scale={1.872}
+          >
             <mesh
               castShadow={true}
               geometry={nodes.Circle005.geometry}
