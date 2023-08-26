@@ -10,11 +10,12 @@ import RoomContext from '../context/room';
 
 // Externals
 import { CameraControls, Html, useCursor, useGLTF } from '@react-three/drei';
-import { GroupProps, useThree } from '@react-three/fiber';
-import { EffectComposer, SelectiveBloom } from '@react-three/postprocessing';
+import { extend, GroupProps, useThree } from '@react-three/fiber';
 import randomColor from 'randomcolor';
 import { Group, Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PointLight } from 'three';
-import { GLTF } from 'three-stdlib';
+import { GLTF, RenderPass, UnrealBloomPass } from 'three-stdlib';
+
+extend({ RenderPass, UnrealBloomPass });
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -271,7 +272,7 @@ type GLTFResult = GLTF & {
 
 const Room: React.FC<GroupProps> = (props) => {
   const { nodes, materials } = useGLTF('/models/room.glb') as GLTFResult;
-  const { controls } = useThree();
+  const { camera, controls, scene } = useThree();
 
   const {
     phoneZoomed,
@@ -426,7 +427,7 @@ const Room: React.FC<GroupProps> = (props) => {
 
   return (
     <>
-      <group ref={modelGroupRef} {...props}>
+      <group dispose={null} ref={modelGroupRef} {...props}>
         {/* Sofa */}
         <mesh
           castShadow={true}
@@ -2215,14 +2216,12 @@ const Room: React.FC<GroupProps> = (props) => {
         />
       </group>
 
-      <EffectComposer>
-        <SelectiveBloom
-          lights={[deskLightRef, desktopLightRef, shelfLightRef]}
-          luminanceSmoothing={0.025}
-          luminanceThreshold={0.9}
-          selection={[bulbMeshRef, fan1MeshRef, fan2MeshRef, desktop1MeshRef, desktop2MeshRef, tvStandMeshRef]}
-        />
-      </EffectComposer>
+      {/* 
+        <Effects>
+          <renderPass attachArray="passes" camera={camera} scene={scene} />
+          <unrealBloomPass args={[undefined, 1.5, 1, 0]} attachArray="passes" />
+        </Effects> 
+      */}
     </>
   );
 };

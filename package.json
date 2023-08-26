@@ -23,7 +23,6 @@
     "@react-spring/web": "^9.7.3",
     "@react-three/drei": "^9.80.6",
     "@react-three/fiber": "^8.13.7",
-    "@react-three/postprocessing": "^2.15.0",
     "@theme-ui/mdx": "^0.16.0",
     "@theme-ui/preset-tosh": "^0.16.0",
     "@theme-ui/style-guide": "^0.16.0",
