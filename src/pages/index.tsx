@@ -6,6 +6,7 @@ import Room from '../components/room';
 // Externals
 import { BakeShadows, CameraControls, Stage } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
+import CameraControlsImpl from 'camera-controls';
 import type { HeadFC, PageProps } from 'gatsby';
 import { Flex, Spinner } from 'theme-ui';
 
@@ -45,7 +46,18 @@ const IndexPage: React.FC<PageProps> = () => {
             maxPolarAngle={Math.PI / 2}
             minAzimuthAngle={0.00001}
             minPolarAngle={0}
+            mouseButtons={{
+              left: CameraControlsImpl.ACTION.ROTATE,
+              middle: CameraControlsImpl.ACTION.NONE,
+              right: CameraControlsImpl.ACTION.NONE,
+              wheel: CameraControlsImpl.ACTION.ZOOM
+            }}
             smoothTime={0.5}
+            touches={{
+              one: CameraControlsImpl.ACTION.TOUCH_ROTATE,
+              two: CameraControlsImpl.ACTION.TOUCH_ZOOM,
+              three: CameraControlsImpl.ACTION.NONE
+            }}
           />
         </Canvas>
       </Suspense>

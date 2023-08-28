@@ -43,8 +43,7 @@ const Phone: React.FC<PhoneProps> = ({ togglePhoneZoomed }) => {
         sx={{
           alignItems: 'flex-start',
           flexDirection: 'column',
-          justifyContent: 'center',
-          height: 'auto'
+          justifyContent: 'center'
         }}
       >
         {/* Location */}

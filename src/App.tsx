@@ -8,6 +8,9 @@ import { Box, useThemeUI } from 'theme-ui';
 // Screens
 import SplashScreen from './screens/splashscreen';
 
+// Suppress useLayoutEffect warnings when running outside a browser
+if (typeof window === 'undefined') React.useLayoutEffect = React.useEffect;
+
 interface AppProps {
   children: React.ReactNode;
 }
