@@ -66,7 +66,7 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
           </Box>
           <Box
             sx={{
-              flex: '0 1 450px'
+              flex: '0 1 400px'
             }}
           >
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', display: ['block', 'block', 'none'], m: 0 }}>
@@ -102,14 +102,14 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
           </Box>
           <Box
             sx={{
-              flex: '0 1 450px'
+              flex: '0 1 400px'
             }}
           >
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', display: ['block', 'block', 'none'], m: 0 }}>
               June 2018 &ndash; March 2023
             </Box>
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-primary)', m: 0 }}>
-              Software Developer &bull; Sparkle SRL
+              Full Stack Developer &bull; Sparkle SRL
             </Box>
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-secondary)', mb: 3, mt: 1.5 }}>
               In charge of developing web and mobile solutions for startups that don't have the necessary development
@@ -138,14 +138,14 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
           </Box>
           <Box
             sx={{
-              flex: '0 1 450px'
+              flex: '0 1 400px'
             }}
           >
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', display: ['block', 'block', 'none'], m: 0 }}>
               February 2018 &ndash; June 2018
             </Box>
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-primary)', m: 0 }}>
-              Internship &bull; Microsoft Innovation Center Belgium
+              Full Stack Developer &bull; Microsoft Innovation Center Belgium (Internship)
             </Box>
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-secondary)', mb: 0, mt: 1.5 }}>
               In charge of developing a website aimed at offering paid challenges to students by companies.
