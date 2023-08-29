@@ -2,7 +2,7 @@ import React from 'react';
 
 // Externals
 import { StaticImage } from 'gatsby-plugin-image';
-import { Button, Flex } from 'theme-ui';
+import { Box, Button, Flex } from 'theme-ui';
 
 interface PhoneProps {
   togglePhoneZoomed: () => void;
@@ -25,7 +25,7 @@ const Phone: React.FC<PhoneProps> = ({ togglePhoneZoomed }) => {
           layout="constrained"
           loading="eager"
           placeholder="blurred"
-          src={`../images/dark_logo.png`}
+          src="../images/dark_logo.png"
           width={150}
         />
       )}
@@ -35,7 +35,7 @@ const Phone: React.FC<PhoneProps> = ({ togglePhoneZoomed }) => {
           layout="constrained"
           loading="eager"
           placeholder="blurred"
-          src={`../images/light_logo.png`}
+          src="../images/light_logo.png"
           width={150}
         />
       )}
@@ -47,42 +47,55 @@ const Phone: React.FC<PhoneProps> = ({ togglePhoneZoomed }) => {
         }}
       >
         {/* Location */}
-        <h3 style={{ color: 'var(--theme-ui-colors-primary)', marginTop: 0, marginBottom: 10 }}>Location</h3>
-        <p style={{ color: 'var(--theme-ui-colors-secondary)', margin: 0 }}>Based in Liège, Belgium</p>
+        <Box as="h3" sx={{ color: 'var(--theme-ui-colors-primary)', mb: 1.5, mt: 0 }}>
+          Location
+        </Box>
+        <Box as="p" sx={{ color: 'var(--theme-ui-colors-secondary)', m: 0 }}>
+          Based in Liège, Belgium
+        </Box>
         {/* Contact */}
-        <h3 style={{ color: 'var(--theme-ui-colors-primary)', marginTop: 30, marginBottom: 10 }}>Contact</h3>
-        <p
+        <Box as="h3" sx={{ color: 'var(--theme-ui-colors-primary)', mb: 1.5, mt: 3 }}>
+          Contact
+        </Box>
+        <Box
+          as="p"
           onClick={() => window.open('tel:+32473407017', '_self')}
-          style={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', margin: 0 }}
+          sx={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', m: 0 }}
         >
           +32473407017
-        </p>
-        <p
+        </Box>
+        <Box
+          as="p"
           onClick={() => window.open('mailto:maclotpierre@gmail.com', '_self')}
-          style={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', margin: 0 }}
+          sx={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', m: 0 }}
         >
           maclotpierre@gmail.com
-        </p>
+        </Box>
         {/* Socials */}
-        <h3 style={{ color: 'var(--theme-ui-colors-primary)', marginTop: 30, marginBottom: 10 }}>Stalk me</h3>
-        <p
+        <Box as="h3" sx={{ color: 'var(--theme-ui-colors-primary)', mb: 1.5, mt: 3 }}>
+          Stalk me
+        </Box>
+        <Box
+          as="p"
           onClick={() => window.open('https://github.com/pmaclot', '_blank')}
-          style={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', margin: 0 }}
+          sx={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', m: 0 }}
         >
           Github
-        </p>
-        <p
+        </Box>
+        <Box
+          as="p"
           onClick={() => window.open('https://www.linkedin.com/in/pierre-maclot/', '_blank')}
-          style={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', margin: 0 }}
+          sx={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', m: 0 }}
         >
           LinkedIn
-        </p>
-        <p
+        </Box>
+        <Box
+          as="p"
           onClick={() => window.open('https://twitter.com/pierre_maclot', '_blank')}
-          style={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', margin: 0 }}
+          sx={{ color: 'var(--theme-ui-colors-secondary)', cursor: 'pointer', m: 0 }}
         >
           Twitter
-        </p>
+        </Box>
       </Flex>
       <Button
         onClick={togglePhoneZoomed}

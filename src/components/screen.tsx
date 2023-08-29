@@ -25,8 +25,8 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
           layout="constrained"
           loading="eager"
           placeholder="blurred"
-          src={`../images/dark_logo.png`}
-          width={150}
+          src="../images/dark_logo.png"
+          width={120}
         />
       )}
       {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#fff' && (
@@ -35,11 +35,11 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
           layout="constrained"
           loading="eager"
           placeholder="blurred"
-          src={`../images/light_logo.png`}
-          width={150}
+          src="../images/light_logo.png"
+          width={120}
         />
       )}
-      {/* On mobile, change layout */}
+      {/* On mobile & tablet, change layout */}
       <Flex
         sx={{
           flexDirection: 'column'
@@ -55,24 +55,30 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
         >
           <Box
             sx={{
+              display: ['none', 'none', 'block'],
               flex: '0 1 350px',
-              marginRight: 20
+              mr: 3
             }}
           >
-            <p style={{ color: 'var(--theme-ui-colors-highlight)', margin: 0, textAlign: 'right' }}>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', m: 0, textAlign: 'right' }}>
               August 2021 &ndash; August 2023
-            </p>
+            </Box>
           </Box>
           <Box
             sx={{
-              flex: '0 1 400px'
+              flex: '0 1 450px'
             }}
           >
-            <p style={{ color: 'var(--theme-ui-colors-primary)', margin: 0 }}>Lead Developer &bull; Revomon DMCC</p>
-            <p style={{ color: 'var(--theme-ui-colors-secondary)', marginBottom: 10, marginTop: 5 }}>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', display: ['block', 'block', 'none'], m: 0 }}>
+              August 2021 &ndash; August 2023
+            </Box>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-primary)', m: 0 }}>
+              Lead Developer &bull; Revomon DMCC
+            </Box>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-secondary)', mb: 3, mt: 1.5 }}>
               In charge of developing and coordinating the development of server infrastructure, databases, web
               applications and their interaction with smart contracts.
-            </p>
+            </Box>
           </Box>
         </Flex>
         {/* Sparkle SRL */}
@@ -85,24 +91,30 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
         >
           <Box
             sx={{
+              display: ['none', 'none', 'block'],
               flex: '0 1 350px',
-              marginRight: 20
+              mr: 3
             }}
           >
-            <p style={{ color: 'var(--theme-ui-colors-highlight)', margin: 0, textAlign: 'right' }}>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', m: 0, textAlign: 'right' }}>
               June 2018 &ndash; March 2023
-            </p>
+            </Box>
           </Box>
           <Box
             sx={{
-              flex: '0 1 400px'
+              flex: '0 1 450px'
             }}
           >
-            <p style={{ color: 'var(--theme-ui-colors-primary)', margin: 0 }}>Software Developer &bull; Sparkle SRL</p>
-            <p style={{ color: 'var(--theme-ui-colors-secondary)', marginBottom: 10, marginTop: 5 }}>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', display: ['block', 'block', 'none'], m: 0 }}>
+              June 2018 &ndash; March 2023
+            </Box>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-primary)', m: 0 }}>
+              Software Developer &bull; Sparkle SRL
+            </Box>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-secondary)', mb: 3, mt: 1.5 }}>
               In charge of developing web and mobile solutions for startups that don't have the necessary development
               teams to get them off the ground.
-            </p>
+            </Box>
           </Box>
         </Flex>
         {/* Microsoft Innovation Center Belgium */}
@@ -115,25 +127,29 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
         >
           <Box
             sx={{
+              display: ['none', 'none', 'block'],
               flex: '0 1 350px',
-              marginRight: 20
+              mr: 3
             }}
           >
-            <p style={{ color: 'var(--theme-ui-colors-highlight)', margin: 0, textAlign: 'right' }}>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', m: 0, textAlign: 'right' }}>
               February 2018 &ndash; June 2018
-            </p>
+            </Box>
           </Box>
           <Box
             sx={{
-              flex: '0 1 400px'
+              flex: '0 1 450px'
             }}
           >
-            <p style={{ color: 'var(--theme-ui-colors-primary)', margin: 0 }}>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', display: ['block', 'block', 'none'], m: 0 }}>
+              February 2018 &ndash; June 2018
+            </Box>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-primary)', m: 0 }}>
               Internship &bull; Microsoft Innovation Center Belgium
-            </p>
-            <p style={{ color: 'var(--theme-ui-colors-secondary)', marginBottom: 0, marginTop: 5 }}>
+            </Box>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-secondary)', mb: 0, mt: 1.5 }}>
               In charge of developing a website aimed at offering paid challenges to students by companies.
-            </p>
+            </Box>
           </Box>
         </Flex>
       </Flex>
