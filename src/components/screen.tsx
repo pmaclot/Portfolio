@@ -73,7 +73,7 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
               August 2021 &ndash; August 2023
             </Box>
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-primary)', m: 0 }}>
-              Lead Developer &bull; Revomon DMCC
+              Lead Developer &bull; Revomon
             </Box>
             <Box as="p" sx={{ color: 'var(--theme-ui-colors-secondary)', mb: 3, mt: 1.5 }}>
               In charge of developing and coordinating the development of server infrastructure, databases, web
