@@ -18,9 +18,7 @@ const IndexPage: React.FC<PageProps> = () => {
     <Layout>
       <Suspense
         fallback={
-          <Flex
-            sx={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', height: '100%', width: '100%' }}
-          >
+          <Flex sx={{ alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%' }}>
             <Spinner />
           </Flex>
         }

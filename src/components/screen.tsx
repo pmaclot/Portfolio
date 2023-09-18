@@ -19,30 +19,32 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
         width: '100%'
       }}
     >
-      {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#000' && (
-        <StaticImage
-          alt="Logo"
-          layout="constrained"
-          loading="eager"
-          placeholder="blurred"
-          src="../images/dark_logo.png"
-          width={120}
-        />
-      )}
-      {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#fff' && (
-        <StaticImage
-          alt="Logo"
-          layout="constrained"
-          loading="eager"
-          placeholder="blurred"
-          src="../images/light_logo.png"
-          width={120}
-        />
-      )}
-      {/* On mobile & tablet, change layout */}
+      <Box sx={{ my: 4 }}>
+        {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#000' && (
+          <StaticImage
+            alt="Logo"
+            layout="constrained"
+            loading="eager"
+            placeholder="blurred"
+            src="../images/dark_logo.png"
+            width={120}
+          />
+        )}
+        {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#fff' && (
+          <StaticImage
+            alt="Logo"
+            layout="constrained"
+            loading="eager"
+            placeholder="blurred"
+            src="../images/light_logo.png"
+            width={120}
+          />
+        )}
+      </Box>
       <Flex
         sx={{
-          flexDirection: 'column'
+          flexDirection: 'column',
+          overflow: 'scroll'
         }}
       >
         {/* Revomon DMCC */}
@@ -161,7 +163,8 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
           cursor: 'pointer',
           fontFamily: 'inherit',
           fontSize: 'inherit',
-          lineHeight: 'inherit'
+          lineHeight: 'inherit',
+          my: 4
         }}
       >
         Back

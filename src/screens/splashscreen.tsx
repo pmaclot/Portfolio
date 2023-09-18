@@ -17,7 +17,7 @@ interface SplashScreenProps {
 
 const SplashScreen = forwardRef<HTMLDivElement, SplashScreenProps>(({ onReady }, ref) => {
   const quote = useMemo<Quote>(
-    () => quotes[Math.floor(seedrandom(new Date().getDay().toString()).quick() * quotes.length)],
+    () => quotes[Math.floor(seedrandom(new Date().toDateString()).quick() * quotes.length)],
     []
   );
 
@@ -36,6 +36,7 @@ const SplashScreen = forwardRef<HTMLDivElement, SplashScreenProps>(({ onReady },
   return (
     <Flex
       as="div"
+      ref={ref}
       sx={{
         alignItems: 'flex-start',
         flexDirection: 'column',

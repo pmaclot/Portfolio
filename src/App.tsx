@@ -18,7 +18,7 @@ interface AppProps {
 const App: React.FC<AppProps> = ({ children }) => {
   const { theme } = useThemeUI();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const transitionSplashscreen = useTransition(loading, {
     from: { opacity: '1' },

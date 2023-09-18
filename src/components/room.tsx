@@ -2153,7 +2153,7 @@ const Room: React.FC<GroupProps> = (props) => {
       {/* Wall */}
       <mesh castShadow={false} geometry={nodes.Plane.geometry} material={materials.White} receiveShadow={true} />
       {/* Floor */}
-      <mesh castShadow={true} geometry={nodes.Plane_1.geometry} material={materials.Floor} receiveShadow={true} />
+      <mesh castShadow={false} geometry={nodes.Plane_1.geometry} material={materials.Floor} receiveShadow={true} />
       {/* Edge */}
       <mesh
         castShadow={true}

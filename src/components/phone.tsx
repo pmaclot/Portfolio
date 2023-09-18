@@ -19,31 +19,32 @@ const Phone: React.FC<PhoneProps> = ({ togglePhoneZoomed }) => {
         width: '100%'
       }}
     >
-      {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#000' && (
-        <StaticImage
-          alt="Logo"
-          layout="constrained"
-          loading="eager"
-          placeholder="blurred"
-          src="../images/dark_logo.png"
-          width={150}
-        />
-      )}
-      {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#fff' && (
-        <StaticImage
-          alt="Logo"
-          layout="constrained"
-          loading="eager"
-          placeholder="blurred"
-          src="../images/light_logo.png"
-          width={150}
-        />
-      )}
+      <Box sx={{ my: 4 }}>
+        {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#000' && (
+          <StaticImage
+            alt="Logo"
+            layout="constrained"
+            loading="eager"
+            placeholder="blurred"
+            src="../images/dark_logo.png"
+            width={150}
+          />
+        )}
+        {getComputedStyle(document.documentElement).getPropertyValue('--theme-ui-colors-text') === '#fff' && (
+          <StaticImage
+            alt="Logo"
+            layout="constrained"
+            loading="eager"
+            placeholder="blurred"
+            src="../images/light_logo.png"
+            width={150}
+          />
+        )}
+      </Box>
       <Flex
         sx={{
-          alignItems: 'flex-start',
           flexDirection: 'column',
-          justifyContent: 'center'
+          overflow: 'scroll'
         }}
       >
         {/* Location */}
@@ -105,7 +106,8 @@ const Phone: React.FC<PhoneProps> = ({ togglePhoneZoomed }) => {
           cursor: 'pointer',
           fontFamily: 'inherit',
           fontSize: 'inherit',
-          lineHeight: 'inherit'
+          lineHeight: 'inherit',
+          my: 4
         }}
       >
         Back
