@@ -44,7 +44,13 @@ const Phone: React.FC<PhoneProps> = ({ togglePhoneZoomed }) => {
       <Flex
         sx={{
           flexDirection: 'column',
-          overflow: 'scroll'
+          overflowY: 'scroll',
+          '::-webkit-scrollbar': {
+            WebkitAppearance: 'none'
+          },
+          '::-webkit-scrollbar-thumb': {
+            backgroundColor: 'var(--theme-ui-colors-accent)'
+          }
         }}
       >
         {/* Location */}

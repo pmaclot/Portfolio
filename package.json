@@ -24,7 +24,7 @@
     "@react-three/drei": "^9.80.6",
     "@react-three/fiber": "^8.13.7",
     "@theme-ui/mdx": "^0.16.0",
-    "@theme-ui/preset-tosh": "^0.16.0",
+    "@theme-ui/preset-tosh": "^0.16.1",
     "@theme-ui/style-guide": "^0.16.0",
     "gatsby": "^5.11.0",
     "gatsby-plugin-image": "^3.11.0",

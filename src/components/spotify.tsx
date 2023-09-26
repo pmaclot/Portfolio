@@ -1,38 +1,44 @@
 import React, { useCallback, useState } from 'react';
 
 // Externals
-import { animated, config, useSpring } from '@react-spring/web';
+import { animated, useTransition } from '@react-spring/web';
 import { Spinner } from 'theme-ui';
 
 const Spotify: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
+  const transitionSpotify = useTransition(loading, {
+    from: { opacity: '1' },
+    enter: { opacity: '1' },
+    leave: { opacity: '0' }
+  });
+
   const onLoad = useCallback((): void => {
     setLoading(false);
   }, []);
 
-  const styles = useSpring({
-    config: config.default,
-    opacity: loading ? 1 : 0
-  });
-
   return (
     <>
-      <animated.div
-        style={{
-          position: 'absolute',
-          alignItems: 'center',
-          background: '#CD379E',
-          borderRadius: '12px',
-          display: 'flex',
-          justifyContent: 'center',
-          height: 152,
-          width: '100%',
-          ...styles
-        }}
-      >
-        {loading && <Spinner />}
-      </animated.div>
+      {transitionSpotify(
+        (style, item) =>
+          item && (
+            <animated.div
+              style={{
+                position: 'absolute',
+                alignItems: 'center',
+                background: '#CD379E',
+                borderRadius: '12px',
+                display: 'flex',
+                justifyContent: 'center',
+                height: 152,
+                width: '100%',
+                ...style
+              }}
+            >
+              {loading && <Spinner sx={{ color: '#fff' }} />}
+            </animated.div>
+          )
+      )}
       <iframe
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         frameBorder={0}
