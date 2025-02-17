@@ -23,6 +23,7 @@ const config: GatsbyConfig = {
         preset: require('./src/theme')
       }
     },
+    'gatsby-plugin-sass',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp'
   ],

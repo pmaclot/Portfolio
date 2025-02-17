@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 // Components
 import Spotify from '../components/spotify';
@@ -19,21 +19,43 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { spotifyPlayer } = useContext(RoomContext);
 
+  const [height, setHeight] = useState('100%');
+  const [width, setWidth] = useState('100%');
+
+  const canvasRef = useRef<HTMLDivElement>(null!);
+
+  useEffect(() => {
+    const measureCanvasSize = () => {
+      const canvasElement = canvasRef.current;
+
+      if (canvasElement) {
+        const canvasHeight = canvasElement.clientHeight;
+        const canvasWidth = canvasElement.clientWidth;
+
+        setWidth(`${canvasWidth % 2 !== 0 ? canvasWidth + 1 : canvasWidth}px`);
+        setHeight(`${canvasHeight % 2 !== 0 ? canvasHeight + 1 : canvasHeight}px`);
+      }
+    };
+
+    measureCanvasSize();
+
+    window.addEventListener('resize', measureCanvasSize);
+    return () => {
+      window.removeEventListener('resize', measureCanvasSize);
+    };
+  }, []);
+
   return (
     <Box
       sx={{
-        height: '100vh',
-        // @ts-ignore
-        // eslint-disable-next-line no-dupe-keys
         height: '100svh',
-        width: '100vw',
-        // @ts-ignore
-        // eslint-disable-next-line no-dupe-keys
         width: '100svw'
       }}
     >
       <Header sx={{ position: 'fixed', top: 0, width: '100%', zIndex: 200 }} />
-      <Box sx={{ height: '100%', width: '100%', zIndex: 0 }}>{children}</Box>
+      <Box ref={canvasRef} sx={{ height: height, width: width, zIndex: 0 }}>
+        {children}
+      </Box>
       {spotifyPlayer && (
         <Box
           sx={{
@@ -54,7 +76,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 };
 
 Layout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.element
 };
 
 export default Layout;

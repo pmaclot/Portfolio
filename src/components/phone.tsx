@@ -5,16 +5,18 @@ import { StaticImage } from 'gatsby-plugin-image';
 import { Box, Button, Flex } from 'theme-ui';
 
 interface PhoneProps {
+  phoneZoomed: boolean;
   togglePhoneZoomed: () => void;
 }
 
-const Phone: React.FC<PhoneProps> = ({ togglePhoneZoomed }) => {
+const Phone: React.FC<PhoneProps> = ({ phoneZoomed, togglePhoneZoomed }) => {
   return (
     <Flex
       sx={{
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
+        pointerEvents: !phoneZoomed ? 'none' : 'auto',
         height: '100%',
         width: '100%'
       }}

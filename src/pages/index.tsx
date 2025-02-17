@@ -4,11 +4,10 @@ import React, { Suspense } from 'react';
 import Room from '../components/room';
 
 // Externals
-import { BakeShadows, CameraControls, Stage } from '@react-three/drei';
+import { BakeShadows, CameraControls, Html, Preload, Stage, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import CameraControlsImpl from 'camera-controls';
 import type { HeadFC, PageProps } from 'gatsby';
-import { Flex, Spinner } from 'theme-ui';
 
 // Layouts
 import Layout from '../layouts';
@@ -16,24 +15,19 @@ import Layout from '../layouts';
 const IndexPage: React.FC<PageProps> = () => {
   return (
     <Layout>
-      <Suspense
-        fallback={
-          <Flex sx={{ alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%' }}>
-            <Spinner />
-          </Flex>
-        }
+      <Canvas
+        camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0, 10] }}
+        dpr={[1, 2]}
+        frameloop="demand"
+        orthographic={true}
+        shadows={true}
       >
-        <Canvas
-          camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0, 10] }}
-          dpr={[1, 2]}
-          frameloop="demand"
-          linear={true}
-          orthographic={true}
-          shadows={true}
-        >
-          <Stage adjustCamera={false} shadows={{ type: 'contact', frames: 1 }}>
+        <Suspense fallback={<Loader />}>
+          <Stage adjustCamera={false} environment="forest" intensity={1} shadows="contact">
             <Room />
           </Stage>
+
+          <Preload all={true} />
 
           <BakeShadows />
 
@@ -57,11 +51,17 @@ const IndexPage: React.FC<PageProps> = () => {
               three: CameraControlsImpl.ACTION.NONE
             }}
           />
-        </Canvas>
-      </Suspense>
+        </Suspense>
+      </Canvas>
     </Layout>
   );
 };
+
+function Loader() {
+  const { progress } = useProgress();
+
+  return <Html center={true}>{progress}% loaded</Html>;
+}
 
 export default IndexPage;
 

@@ -18,7 +18,8 @@ interface AppProps {
 const App: React.FC<AppProps> = ({ children }) => {
   const { theme } = useThemeUI();
 
-  const [loading, setLoading] = useState<boolean>(true);
+  // TODO: Only when path is "/" and history is empty (new visit)
+  const [loading, setLoading] = useState<boolean>(false);
 
   const transitionSplashscreen = useTransition(loading, {
     from: { opacity: '1' },
@@ -68,7 +69,7 @@ const App: React.FC<AppProps> = ({ children }) => {
 };
 
 App.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.element
 };
 
 export default App;

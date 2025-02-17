@@ -12,7 +12,7 @@ import RoomContext from '../context/room';
 import { CameraControls, Html, useCursor, useGLTF } from '@react-three/drei';
 import { GroupProps, useThree } from '@react-three/fiber';
 import randomColor from 'randomcolor';
-import { Group, Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PointLight } from 'three';
+import { Group, Mesh, MeshPhysicalMaterial, MeshStandardMaterial } from 'three';
 import { GLTF } from 'three-stdlib';
 
 type GLTFResult = GLTF & {
@@ -232,7 +232,7 @@ type GLTFResult = GLTF & {
     ['Black']: MeshStandardMaterial;
     ['Black.001']: MeshStandardMaterial;
     ['Black.002']: MeshStandardMaterial;
-    Default_Material: THREE.MeshStandardMaterial;
+    Default_Material: MeshStandardMaterial;
     Floor: MeshStandardMaterial;
     Glass: MeshPhysicalMaterial;
     Green: MeshStandardMaterial;
@@ -240,7 +240,7 @@ type GLTFResult = GLTF & {
     Screen: MeshStandardMaterial;
     Sofa: MeshStandardMaterial;
     White: MeshStandardMaterial;
-    Material: THREE.MeshStandardMaterial;
+    Material: MeshStandardMaterial;
     ['Material.001']: MeshStandardMaterial;
     ['Material.003']: MeshStandardMaterial;
     ['Material.009']: MeshStandardMaterial;
@@ -250,10 +250,10 @@ type GLTFResult = GLTF & {
     ['Material.013']: MeshStandardMaterial;
     ['Material.014']: MeshStandardMaterial;
     ['ambiant light']: MeshStandardMaterial;
-    lambert1: THREE.MeshStandardMaterial;
-    lambert2: THREE.MeshStandardMaterial;
-    lambert4: THREE.MeshStandardMaterial;
-    lambert5: THREE.MeshStandardMaterial;
+    lambert1: MeshStandardMaterial;
+    lambert2: MeshStandardMaterial;
+    lambert4: MeshStandardMaterial;
+    lambert5: MeshStandardMaterial;
     ['light']: MeshStandardMaterial;
     ['light.001']: MeshStandardMaterial;
     ['light.002']: MeshStandardMaterial;
@@ -303,21 +303,21 @@ const Room: React.FC<GroupProps> = (props) => {
     'auto'
   );
 
+  // If we want to apply glow effect only those meshes (desk light)
   const bulbMeshRef = useRef<Mesh>(null!);
+
+  // If we want to apply glow effect only those meshes (ambiant light)
   const fan1MeshRef = useRef<Mesh>(null!);
   const fan2MeshRef = useRef<Mesh>(null!);
   const desktop1MeshRef = useRef<Mesh>(null!);
   const desktop2MeshRef = useRef<Mesh>(null!);
   const tvStandMeshRef = useRef<Mesh>(null!);
 
+  // This is used for camera transitions
   const modelGroupRef = useRef<Group>(null!);
   const phoneGroupRef = useRef<Group>(null!);
   const projectorGroupRef = useRef<Group>(null!);
   const screenGroupRef = useRef<Group>(null!);
-
-  const deskLightRef = useRef<PointLight>(null!);
-  const desktopLightRef = useRef<PointLight>(null!);
-  const shelfLightRef = useRef<PointLight>(null!);
 
   const cameraToModel = useCallback(async (): Promise<void> => {
     if (!controls) return;
@@ -389,7 +389,7 @@ const Room: React.FC<GroupProps> = (props) => {
     await Promise.all([
       (controls as unknown as CameraControls).rotateAzimuthTo(0.00001, true),
       (controls as unknown as CameraControls).rotatePolarTo(Math.PI / 2.21, true),
-      (controls as unknown as CameraControls).fitToBox(screenGroupRef.current, true, { cover: true, paddingTop: 0.4 })
+      (controls as unknown as CameraControls).fitToBox(screenGroupRef.current, true, { cover: true, paddingTop: 0.15 })
     ]);
   }, [controls]);
 
@@ -567,6 +567,14 @@ const Room: React.FC<GroupProps> = (props) => {
           rotation={[-0.206, 0, 0]}
           scale={1.872}
         >
+          <mesh
+            position={[0, 0.1, -0.05]}
+            scale={[0.4, 0.2, 0.4]}
+            visible={true} // TODO: Change to false when tutorial is done
+          >
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color="red" opacity={0.5} transparent={true} />
+          </mesh>
           <mesh castShadow={true} geometry={nodes.Circle005.geometry} material={materials.Metal} receiveShadow={true} />
           <mesh
             castShadow={true}
@@ -592,6 +600,14 @@ const Room: React.FC<GroupProps> = (props) => {
           receiveShadow={true}
           scale={1.396}
         >
+          <mesh
+            position={[0, 0.4, 0.135]}
+            scale={[0.45, 1, 0.7]}
+            visible={true} // TODO: Change to false when tutorial is done
+          >
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color="red" opacity={0.5} transparent={true} />
+          </mesh>
           <group position={[0, 0.746, 0.38]} scale={1.158}>
             <mesh
               castShadow={true}
@@ -620,18 +636,30 @@ const Room: React.FC<GroupProps> = (props) => {
             decay={2}
             intensity={0.8}
             position={[0.09, 0.415, 0.428]}
-            ref={deskLightRef}
             rotation={[-Math.PI / 2, 0, 0]}
             scale={0.7}
+            shadow-mapSize-height={512}
+            shadow-mapSize-width={512}
             visible={deskLight}
           />
         </mesh>
         <group
+          onClick={!screenZoomed ? toggleScreenZoomed : undefined}
+          onPointerOut={() => setScreenHovered(false)}
+          onPointerOver={() => setScreenHovered(true)}
           position={[-0.183, 1.735, -0.278]}
           ref={screenGroupRef}
           rotation={[-Math.PI / 2, 0, -1.579]}
           scale={[2.8, 3.5, 2.8]}
         >
+          <mesh
+            position={[0, 0, 0.3]}
+            scale={[0.15, 0.7, 0.6]}
+            visible={true} // TODO: Change to false when tutorial is done
+          >
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color="blue" opacity={0.5} transparent={true} />
+          </mesh>
           <group rotation={[Math.PI / 2, 0, 0]}>
             <group position={[-0.1, 0.196, 0]}>
               <mesh
@@ -662,17 +690,31 @@ const Room: React.FC<GroupProps> = (props) => {
               >
                 <div
                   onClick={!screenZoomed ? toggleScreenZoomed : undefined}
-                  onPointerOut={() => setScreenHovered(false)}
-                  onPointerOver={() => setScreenHovered(true)}
-                  style={{ height: '100%', width: '100%' }}
+                  style={{ height: '100%', width: '100%', cursor: !screenZoomed ? 'pointer' : undefined }}
                 >
-                  <Screen toggleScreenZoomed={toggleScreenZoomed} />
+                  <Screen screenZoomed={screenZoomed} toggleScreenZoomed={toggleScreenZoomed} />
                 </div>
               </Html>
             </group>
           </group>
         </group>
-        <group position={[1.454, 1.75, 0.314]} ref={phoneGroupRef} rotation={[-Math.PI / 2, 0, 1.124]} scale={0.04}>
+        <group
+          onClick={!phoneZoomed ? togglePhoneZoomed : undefined}
+          onPointerOut={() => setPhoneHovered(false)}
+          onPointerOver={() => setPhoneHovered(true)}
+          position={[1.454, 1.75, 0.314]}
+          ref={phoneGroupRef}
+          rotation={[-Math.PI / 2, 0, 1.124]}
+          scale={0.04}
+        >
+          <mesh
+            position={[0.51, -1, 0]}
+            scale={[18, 10, 10]}
+            visible={true} // TODO: Change to false when tutorial is done
+          >
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color="blue" opacity={0.5} transparent={true} />
+          </mesh>
           <group rotation={[Math.PI / 2, 0, 0]}>
             <mesh
               castShadow={true}
@@ -796,11 +838,9 @@ const Room: React.FC<GroupProps> = (props) => {
             >
               <div
                 onClick={!phoneZoomed ? togglePhoneZoomed : undefined}
-                onPointerOut={() => setPhoneHovered(false)}
-                onPointerOver={() => setPhoneHovered(true)}
-                style={{ height: '100%', width: '100%' }}
+                style={{ height: '100%', width: '100%', cursor: !phoneZoomed ? 'pointer' : undefined }}
               >
-                <Phone togglePhoneZoomed={togglePhoneZoomed} />
+                <Phone phoneZoomed={phoneZoomed} togglePhoneZoomed={togglePhoneZoomed} />
               </div>
             </Html>
           </group>
@@ -854,6 +894,14 @@ const Room: React.FC<GroupProps> = (props) => {
           onPointerOver={() => setDesktopHovered(true)}
           position={[-2.264, 1.748, -0.016]}
         >
+          <mesh
+            position={[0, 0.6, 0.02]}
+            scale={[0.65, 1.2, 1.5]}
+            visible={true} // TODO: Change to false when tutorial is done
+          >
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color="red" opacity={0.5} transparent={true} />
+          </mesh>
           <mesh castShadow={true} geometry={nodes.Plane070.geometry} material={materials.White} receiveShadow={true} />
           <mesh
             castShadow={true}
@@ -986,8 +1034,9 @@ const Room: React.FC<GroupProps> = (props) => {
             decay={2}
             intensity={0.5}
             position={[0.074, 0.935, -0.254]}
-            ref={desktopLightRef}
             rotation={[-Math.PI / 2, 0, 0]}
+            shadow-mapSize-height={512}
+            shadow-mapSize-width={512}
           />
         </group>
       </group>
@@ -1699,10 +1748,11 @@ const Room: React.FC<GroupProps> = (props) => {
           castShadow={true}
           color={ambiantLight}
           decay={2}
-          intensity={0.35}
-          position={[0.196, 1.188, -0.01]}
-          ref={shelfLightRef}
+          intensity={0.25}
+          position={[0.196, 1.35, -0.01]}
           rotation={[-Math.PI / 2, 0, 0]}
+          shadow-mapSize-height={512}
+          shadow-mapSize-width={512}
         />
       </mesh>
       {/* Shelf Car */}
@@ -2077,7 +2127,22 @@ const Room: React.FC<GroupProps> = (props) => {
         </group>
       </group>
       {/* Projector */}
-      <group position={[-3.91, 2.881, 0.859]} ref={projectorGroupRef} rotation={[0, 0, -Math.PI / 2]}>
+      <group
+        onClick={!projectorZoomed ? toggleProjectorZoomed : undefined}
+        onPointerOut={() => setProjectorHovered(false)}
+        onPointerOver={() => setProjectorHovered(true)}
+        position={[-3.91, 2.881, 0.859]}
+        ref={projectorGroupRef}
+        rotation={[0, 0, -Math.PI / 2]}
+      >
+        <mesh
+          position={[-0.07, 0, 0]}
+          scale={[3.5, 0.3, 6.12]}
+          visible={true} // TODO: Change to false when tutorial is done
+        >
+          <boxGeometry args={[1, 1, 1]} />
+          <meshBasicMaterial color="blue" opacity={0.5} transparent={true} />
+        </mesh>
         <mesh castShadow={true} geometry={nodes.Plane083_1.geometry} material={materials.White} receiveShadow={true} />
         <mesh
           castShadow={true}
@@ -2116,11 +2181,9 @@ const Room: React.FC<GroupProps> = (props) => {
         >
           <div
             onClick={!projectorZoomed ? toggleProjectorZoomed : undefined}
-            onPointerOut={() => setProjectorHovered(false)}
-            onPointerOver={() => setProjectorHovered(true)}
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: '100%', width: '100%', cursor: !projectorZoomed ? 'pointer' : undefined }}
           >
-            <Projector toggleProjectorZoomed={toggleProjectorZoomed} />
+            <Projector projectorZoomed={projectorZoomed} toggleProjectorZoomed={toggleProjectorZoomed} />
           </div>
         </Html>
       </group>

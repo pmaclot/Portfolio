@@ -5,16 +5,18 @@ import { StaticImage } from 'gatsby-plugin-image';
 import { Badge, Box, Button, Flex } from 'theme-ui';
 
 interface ScreenProps {
+  screenZoomed: boolean;
   toggleScreenZoomed: () => void;
 }
 
-const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
+const Screen: React.FC<ScreenProps> = ({ screenZoomed, toggleScreenZoomed }) => {
   return (
     <Flex
       sx={{
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
+        pointerEvents: screenZoomed ? 'auto' : 'none',
         height: '100%',
         width: '100%'
       }}
@@ -53,6 +55,142 @@ const Screen: React.FC<ScreenProps> = ({ toggleScreenZoomed }) => {
           }
         }}
       >
+        {/* TODO: Avanade */}
+        <Flex
+          sx={{
+            alignItems: 'flex-start',
+            flexDirection: 'row',
+            justifyContent: 'center'
+          }}
+        >
+          <Box
+            sx={{
+              display: ['none', 'none', 'block'],
+              flex: '0 1 350px',
+              mr: 3
+            }}
+          >
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', m: 0, textAlign: 'right' }}>
+              November 2023 &ndash; Present
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              flex: '0 1 400px'
+            }}
+          >
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-highlight)', display: ['block', 'block', 'none'], m: 0 }}>
+              November 2023 &ndash; Present
+            </Box>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-primary)', m: 0 }}>
+              Consultant &bull; Avanade
+            </Box>
+            <Box as="p" sx={{ color: 'var(--theme-ui-colors-secondary)', mb: 2, mt: 1 }}>
+              TODO: Change description.
+            </Box>
+            <Flex sx={{ flexWrap: 'wrap', mb: 3, '& > div': { mb: 1, mr: 1 } }}>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                Azure
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                DevOps
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                ASP.NET
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                ASP.NET Core
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                MySql
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                Node.js
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                React
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                React Native
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                Razor Pages
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                SignalR
+              </Badge>
+              <Badge
+                sx={{
+                  color: 'var(--theme-ui-colors-primary)',
+                  bg: 'transparent',
+                  boxShadow: '0px 0px 0px 1px inset'
+                }}
+              >
+                Sql Server
+              </Badge>
+            </Flex>
+          </Box>
+        </Flex>
         {/* Revomon DMCC */}
         <Flex
           sx={{
