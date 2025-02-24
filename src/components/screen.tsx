@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 // Externals
 import { StaticImage } from 'gatsby-plugin-image';
@@ -665,4 +665,4 @@ const Screen: React.FC<ScreenProps> = ({ screenZoomed, toggleScreenZoomed }) => 
   );
 };
 
-export default Screen;
+export default memo(Screen);

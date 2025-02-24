@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 // Externals
 import { StaticImage } from 'gatsby-plugin-image';
@@ -124,4 +124,4 @@ const Phone: React.FC<PhoneProps> = ({ phoneZoomed, togglePhoneZoomed }) => {
   );
 };
 
-export default Phone;
+export default memo(Phone);

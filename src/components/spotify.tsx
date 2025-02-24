@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 
 // Externals
 import { animated, useTransition } from '@react-spring/web';
@@ -54,4 +54,4 @@ const Spotify: React.FC = () => {
   );
 };
 
-export default Spotify;
+export default memo(Spotify);

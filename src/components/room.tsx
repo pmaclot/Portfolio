@@ -273,9 +273,11 @@ const Room: React.FC<GroupProps> = (props) => {
   const { controls } = useThree();
 
   const {
+    pacManGame,
     phoneZoomed,
     projectorZoomed,
     screenZoomed,
+    togglePacManGame,
     togglePhoneZoomed,
     toggleProjectorZoomed,
     toggleScreenZoomed,
@@ -285,6 +287,7 @@ const Room: React.FC<GroupProps> = (props) => {
   const [ambiantLight, setAmbiantLight] = useState<string>('#ab61ff');
   const [deskLight, setDeskLight] = useState<boolean>(true);
 
+  const [cabinetHovered, setCabinetHovered] = useState<boolean>(false);
   const [desktopHovered, setDesktopHovered] = useState<boolean>(false);
   const [headphonesHovered, setHeadphonesHovered] = useState<boolean>(false);
   const [lightHovered, setLightHovered] = useState<boolean>(false);
@@ -292,8 +295,11 @@ const Room: React.FC<GroupProps> = (props) => {
   const [projectorHovered, setProjectorHovered] = useState<boolean>(false);
   const [screenHovered, setScreenHovered] = useState<boolean>(false);
 
+  const [firstVisitTutorial, setFirstVisitTutorial] = useState<boolean>(false);
+
   useCursor(
-    desktopHovered ||
+    cabinetHovered ||
+      desktopHovered ||
       headphonesHovered ||
       lightHovered ||
       (phoneHovered && !phoneZoomed) ||
@@ -567,11 +573,7 @@ const Room: React.FC<GroupProps> = (props) => {
           rotation={[-0.206, 0, 0]}
           scale={1.872}
         >
-          <mesh
-            position={[0, 0.1, -0.05]}
-            scale={[0.4, 0.2, 0.4]}
-            visible={true} // TODO: Change to false when tutorial is done
-          >
+          <mesh position={[0, 0.1, -0.05]} scale={[0.4, 0.2, 0.4]} visible={firstVisitTutorial}>
             <boxGeometry args={[1, 1, 1]} />
             <meshBasicMaterial color="red" opacity={0.5} transparent={true} />
           </mesh>
@@ -600,11 +602,7 @@ const Room: React.FC<GroupProps> = (props) => {
           receiveShadow={true}
           scale={1.396}
         >
-          <mesh
-            position={[0, 0.4, 0.135]}
-            scale={[0.45, 1, 0.7]}
-            visible={true} // TODO: Change to false when tutorial is done
-          >
+          <mesh position={[0, 0.4, 0.135]} scale={[0.45, 1, 0.7]} visible={firstVisitTutorial}>
             <boxGeometry args={[1, 1, 1]} />
             <meshBasicMaterial color="red" opacity={0.5} transparent={true} />
           </mesh>
@@ -652,11 +650,7 @@ const Room: React.FC<GroupProps> = (props) => {
           rotation={[-Math.PI / 2, 0, -1.579]}
           scale={[2.8, 3.5, 2.8]}
         >
-          <mesh
-            position={[0, 0, 0.3]}
-            scale={[0.15, 0.7, 0.6]}
-            visible={true} // TODO: Change to false when tutorial is done
-          >
+          <mesh position={[0, 0, 0.3]} scale={[0.15, 0.7, 0.6]} visible={firstVisitTutorial}>
             <boxGeometry args={[1, 1, 1]} />
             <meshBasicMaterial color="blue" opacity={0.5} transparent={true} />
           </mesh>
@@ -707,11 +701,7 @@ const Room: React.FC<GroupProps> = (props) => {
           rotation={[-Math.PI / 2, 0, 1.124]}
           scale={0.04}
         >
-          <mesh
-            position={[0.51, -1, 0]}
-            scale={[18, 10, 10]}
-            visible={true} // TODO: Change to false when tutorial is done
-          >
+          <mesh position={[0.51, -1, 0]} scale={[18, 10, 10]} visible={firstVisitTutorial}>
             <boxGeometry args={[1, 1, 1]} />
             <meshBasicMaterial color="blue" opacity={0.5} transparent={true} />
           </mesh>
@@ -894,11 +884,7 @@ const Room: React.FC<GroupProps> = (props) => {
           onPointerOver={() => setDesktopHovered(true)}
           position={[-2.264, 1.748, -0.016]}
         >
-          <mesh
-            position={[0, 0.6, 0.02]}
-            scale={[0.65, 1.2, 1.5]}
-            visible={true} // TODO: Change to false when tutorial is done
-          >
+          <mesh position={[0, 0.6, 0.02]} scale={[0.65, 1.2, 1.5]} visible={firstVisitTutorial}>
             <boxGeometry args={[1, 1, 1]} />
             <meshBasicMaterial color="red" opacity={0.5} transparent={true} />
           </mesh>
@@ -1040,7 +1026,7 @@ const Room: React.FC<GroupProps> = (props) => {
           />
         </group>
       </group>
-      {/* PS Cabinet */}
+      {/* TV Cabinet */}
       <group position={[-3.357, 0, 0.667]}>
         <mesh castShadow={true} geometry={nodes.Plane017.geometry} material={materials['Black']} receiveShadow={true} />
         <mesh
@@ -1061,10 +1047,17 @@ const Room: React.FC<GroupProps> = (props) => {
           castShadow={true}
           geometry={nodes.Plane039.geometry}
           material={materials.White}
+          onClick={togglePacManGame}
+          onPointerOut={() => setCabinetHovered(false)}
+          onPointerOver={() => setCabinetHovered(true)}
           position={[-0.003, 0.892, -0.068]}
           receiveShadow={true}
           scale={[1.022, 1.158, 1.022]}
         >
+          <mesh position={[0, 0.15, 0.07]} scale={[1, 0.3, 4.4]} visible={firstVisitTutorial}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color="red" opacity={0.5} transparent={true} />
+          </mesh>
           <mesh castShadow={true} geometry={nodes.Plane037.geometry} material={materials.White} receiveShadow={true} />
           <mesh
             castShadow={true}
@@ -2135,11 +2128,7 @@ const Room: React.FC<GroupProps> = (props) => {
         ref={projectorGroupRef}
         rotation={[0, 0, -Math.PI / 2]}
       >
-        <mesh
-          position={[-0.07, 0, 0]}
-          scale={[3.5, 0.3, 6.12]}
-          visible={true} // TODO: Change to false when tutorial is done
-        >
+        <mesh position={[-0.07, 0, 0]} scale={[3.5, 0.3, 6.12]} visible={firstVisitTutorial}>
           <boxGeometry args={[1, 1, 1]} />
           <meshBasicMaterial color="blue" opacity={0.5} transparent={true} />
         </mesh>
@@ -2183,7 +2172,12 @@ const Room: React.FC<GroupProps> = (props) => {
             onClick={!projectorZoomed ? toggleProjectorZoomed : undefined}
             style={{ height: '100%', width: '100%', cursor: !projectorZoomed ? 'pointer' : undefined }}
           >
-            <Projector projectorZoomed={projectorZoomed} toggleProjectorZoomed={toggleProjectorZoomed} />
+            <Projector
+              pacManGame={pacManGame}
+              projectorZoomed={projectorZoomed}
+              togglePacManGame={togglePacManGame}
+              toggleProjectorZoomed={toggleProjectorZoomed}
+            />
           </div>
         </Html>
       </group>
